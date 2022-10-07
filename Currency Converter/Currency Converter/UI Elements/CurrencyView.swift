@@ -15,7 +15,9 @@ struct CurrencyView: View {
     
     //Currency currently being shown on screen
     @StateObject var currency: Currency
+    @StateObject var currencies: Currencies
     @State private var isShowingNumberPad = false
+
     
     var body: some View {
         HStack{
@@ -52,7 +54,7 @@ struct CurrencyView: View {
             }
             .background(
                 Rectangle()
-                    .background(.thinMaterial.opacity(0.2))
+                    .background(currency.isSelected ? Material.thickMaterial.opacity(1) : Material.thinMaterial.opacity(0.2))
                     .clipShape(RoundedRectangle(cornerRadius: 7))
             )
         }
@@ -69,7 +71,7 @@ struct CurrencyView: View {
         .clipShape(RoundedRectangle(cornerRadius: 7))
         
         .sheet(isPresented: $isShowingNumberPad) {
-            NumpadView(currency: currency)
+            NumpadView(currency: currency, currencies: currencies)
         }
         
         
@@ -81,9 +83,7 @@ struct CurrencyView_Previews: PreviewProvider {
     static var previews: some View {
         
         NavigationView{
-            
-                CurrencyView(currency: Currency.exempleCurrencyFrance())
-            
+            CurrencyView(currency: Currency.exempleCurrencyFrance(), currencies: Currencies())
         }
     }
 }

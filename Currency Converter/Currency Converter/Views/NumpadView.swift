@@ -12,10 +12,9 @@ struct NumpadView: View {
     
     @Environment(\.dismiss) var dismiss
     @StateObject var currency: Currency
-    
+    @StateObject var currencies: Currencies
     
     private let numberFormatter = NumberFormatter()
-    
 
     
     var body: some View {
@@ -24,14 +23,22 @@ struct NumpadView: View {
                 TextField("Enter Amount", value: $currency.calculatedValue, formatter: numberFormatter)
                     
                 Text(currency.code)
+                Button("Done"){
+                    
+                }
             }
            
         }
-        
-        
+        .onAppear(perform: SetCurrencyAsSelected)
+    
     }
     
-    func configureNumberFormatter(){
+    func SetCurrencyAsSelected(){
+        currencies.SetInputValue(selectedCurrency: currency)
+        print(currencies.selectedCurrency.code + " is Selected")
+    }
+    
+    func ConfigureNumberFormatter(){
         numberFormatter.numberStyle = .currency
         numberFormatter.maximumFractionDigits = 2
         numberFormatter.currencyCode = currency.code
@@ -40,7 +47,7 @@ struct NumpadView: View {
 
 struct NumpadView_Previews: PreviewProvider {
     static var previews: some View {
-        NumpadView(currency: Currency.exempleCurrencyFrance())
+        NumpadView(currency: Currency.exempleCurrencyFrance(), currencies: Currencies())
             .environmentObject(Currencies())
     }
 }

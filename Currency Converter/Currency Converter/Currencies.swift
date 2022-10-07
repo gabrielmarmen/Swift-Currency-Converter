@@ -30,17 +30,30 @@ class Currencies: ObservableObject {
     }
     
     
-    
+    var selectedCurrency: Currency {
+        for currency in chosen {
+            if currency.inputValue != nil {
+                return currency
+            }
+        }
+        return Currency(code: "EUR", name: "Undefined")
+    }
     
     //Default Initializer
     init(){
         all = [Currency]()
     }
     
-    func resetCurrenciesInputToNil() {
+    
+    
+    func SetInputValue(selectedCurrency: Currency) {
         for currency in chosen where currency.inputValue != nil {
             currency.inputValue = nil
         }
+        
+        selectedCurrency.inputValue = selectedCurrency.calculatedValue
+        
+        
     }
 }
 
@@ -63,6 +76,15 @@ class Currency: Identifiable, ObservableObject {
     
     var id: String {
         code
+    }
+    
+    var isSelected: Bool {
+        if self.inputValue != nil {
+            return true
+        } else {
+            return false
+        }
+        
     }
     
     //Returns the value in the right format for the currency used

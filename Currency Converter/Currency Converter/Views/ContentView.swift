@@ -29,7 +29,7 @@ struct ContentView: View {
         NavigationView{
             ScrollView{
                 ForEach(currencies.chosen){ currency in
-                    CurrencyView(currency: currency)
+                    CurrencyView(currency: currency, currencies: currencies)
                         .padding(.horizontal)
                         .padding(.bottom, 10)
                 }
@@ -43,14 +43,7 @@ struct ContentView: View {
             .navigationTitle("Currencies")
             
         }
-        
-        
-        
-        
     }
-    
-    
-    
 }
 
 struct ContentView_Previews: PreviewProvider {
