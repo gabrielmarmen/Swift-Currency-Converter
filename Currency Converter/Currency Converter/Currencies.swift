@@ -16,6 +16,8 @@ class Currencies: ObservableObject {
     @Published var all: [Currency]
     
     
+    
+    
     //Computed property that updates when a currency is enabled by the user
     var chosen: [Currency] {
         var tempArray = [Currency]()
@@ -27,42 +29,72 @@ class Currencies: ObservableObject {
         return tempArray
     }
     
+    
+    
+    
     //Default Initializer
     init(){
         all = [Currency]()
     }
     
+    func resetCurrenciesInputToNil() {
+        for currency in chosen where currency.inputValue != nil {
+            currency.inputValue = nil
+        }
+    }
 }
 
-struct Currency: Codable, Identifiable {
+class Currency: Identifiable, ObservableObject {
     
     var code: String
     var name: String
     //The symbol for the currency might be needed in the future. From what I understand SwiftUI handles it nativelly though.
+    @Published var inputValue: Double?
+    @Published var calculatedValue = 5.5
     
     var enabled = false
     var countries = [Country]()
+    
+    
+    init(code: String, name: String){
+        self.code = code
+        self.name = name
+    }
     
     var id: String {
         code
     }
     
-    //Using FlagKit to Generate a Flag SwiftUI Image.
+    //Returns the value in the right format for the currency used
+    //Uses the input value if the currency is the one being edited if not uses the calculatedValue
+    var formatedValue: String {
+        if inputValue == nil {
+            return calculatedValue.formatted(.currency(code: code))
+        }
+        else {
+            return (inputValue ?? 0.0).formatted(.currency(code: code))
+        }
+    }
+    
+    //Using local assets to Generate a Flag SwiftUI Image.
     //This gets the first Country in the Countries List and returns its flag
     //If the currency is EUR it sends back the EU flag
     var flagImage: Image {
-        guard code != "EUR" else {return Image(uiImage: Flag(countryCode: "EU")!.originalImage) }
+        guard code != "EUR" else {return Image("eu") }
+        guard code != "GBP" else {return Image("gb") }
         if let unWrappedcode = countries.first?.code {
-            if let img = Flag(countryCode: unWrappedcode)?.originalImage {
-                return Image(uiImage: img )
-            }
+            return Image(unWrappedcode.lowercased())
         }
         return Image(systemName: "x.square.fill")
     }
     
+    
+    
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    
     //Returns an exemple Currency of Afghanistan for testing purposes
     static func exempleCurrencyAfghanistan() -> Currency {
-        var exempleCurrency = Currency(code: "AFN", name: "Afghani")
+        let exempleCurrency = Currency(code: "AFN", name: "Afghani")
         let exempleCountry = Country(name: "Afghanistan", code: "AF")
         exempleCurrency.enabled = true
         
@@ -72,7 +104,7 @@ struct Currency: Codable, Identifiable {
     }
     //Returns an exemple Currency of France for testing purposes
     static func exempleCurrencyFrance() -> Currency {
-        var exempleCurrency = Currency(code: "EUR", name: "Euro")
+        let exempleCurrency = Currency(code: "EUR", name: "Euro")
         let exempleCountry = Country(name: "France", code: "FR")
         exempleCurrency.enabled = true
         

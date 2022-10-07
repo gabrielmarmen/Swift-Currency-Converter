@@ -18,6 +18,7 @@
 		60AA10E428EDC7E800CB3246 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60AA10E328EDC7E800CB3246 /* MainView.swift */; };
 		60AA10E628EDC86C00CB3246 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60AA10E528EDC86C00CB3246 /* SettingsView.swift */; };
 		60AA10EA28EDCF4500CB3246 /* CurrencyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60AA10E928EDCF4500CB3246 /* CurrencyView.swift */; };
+		60AA110128F026BC00CB3246 /* NumpadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60AA110028F026BC00CB3246 /* NumpadView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +33,7 @@
 		60AA10E328EDC7E800CB3246 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		60AA10E528EDC86C00CB3246 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		60AA10E928EDCF4500CB3246 /* CurrencyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyView.swift; sourceTree = "<group>"; };
+		60AA110028F026BC00CB3246 /* NumpadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumpadView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -91,6 +93,7 @@
 				60AA10CE28EDBCD500CB3246 /* ContentView.swift */,
 				60AA10E528EDC86C00CB3246 /* SettingsView.swift */,
 				60AA10E328EDC7E800CB3246 /* MainView.swift */,
+				60AA110028F026BC00CB3246 /* NumpadView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -183,6 +186,7 @@
 				60AA10E228EDC6B100CB3246 /* Country.swift in Sources */,
 				60AA10DB28EDBD5400CB3246 /* Currencies.swift in Sources */,
 				60AA10CF28EDBCD500CB3246 /* ContentView.swift in Sources */,
+				60AA110128F026BC00CB3246 /* NumpadView.swift in Sources */,
 				60AA10EA28EDCF4500CB3246 /* CurrencyView.swift in Sources */,
 				60AA10E628EDC86C00CB3246 /* SettingsView.swift in Sources */,
 				60AA10E428EDC7E800CB3246 /* MainView.swift in Sources */,
