@@ -63,7 +63,7 @@ class Currency: Identifiable, ObservableObject {
     var name: String
     //The symbol for the currency might be needed in the future. From what I understand SwiftUI handles it nativelly though.
     @Published var inputValue: Double?
-    @Published var calculatedValue = 5.5
+    @Published var calculatedValue = 5.5 // Calculate this with the conversion rate if Input value is nil
     
     var enabled = false
     var countries = [Country]()

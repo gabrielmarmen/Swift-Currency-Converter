@@ -54,7 +54,7 @@ struct CurrencyView: View {
             }
             .background(
                 Rectangle()
-                    .background(currency.isSelected ? Material.thickMaterial.opacity(1) : Material.thinMaterial.opacity(0.2))
+                    .background(Material.thinMaterial.opacity(0.7))
                     .clipShape(RoundedRectangle(cornerRadius: 7))
             )
         }
