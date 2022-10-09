@@ -27,6 +27,7 @@ struct CurrencyView: View {
                     .scaledToFit()
                     .frame(height: 50)
                     .clipShape(RoundedRectangle(cornerRadius: 7))
+                    .shadow(color: .primary, radius: 1)
                 // Button("Modify Currency"){
                 //    currency.calculatedValue = Double.random(in: 0.0...10)
                 // }

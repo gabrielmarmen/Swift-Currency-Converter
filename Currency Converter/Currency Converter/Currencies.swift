@@ -30,6 +30,7 @@ class Currencies: ObservableObject {
     }
     
     
+    
     var selectedCurrency: Currency {
         for currency in chosen {
             if currency.inputValue != nil {
@@ -39,6 +40,14 @@ class Currencies: ObservableObject {
         return Currency(code: "EUR", name: "Undefined")
     }
     
+    var numberFormatter: NumberFormatter {
+        let formatter = NumberFormatter()
+        formatter.currencyCode = selectedCurrency.code
+        formatter.numberStyle = .currency
+        formatter.maximumFractionDigits = 2
+        return formatter
+    }
+    
     //Default Initializer
     init(){
         all = [Currency]()
@@ -46,14 +55,12 @@ class Currencies: ObservableObject {
     
     
     
-    func SetInputValue(selectedCurrency: Currency) {
+    func SetInputValues(selectedCurrency: Currency) {
         for currency in chosen where currency.inputValue != nil {
             currency.inputValue = nil
         }
         
         selectedCurrency.inputValue = selectedCurrency.calculatedValue
-        
-        
     }
 }
 
@@ -67,6 +74,8 @@ class Currency: Identifiable, ObservableObject {
     
     var enabled = false
     var countries = [Country]()
+    
+    
     
     
     init(code: String, name: String){

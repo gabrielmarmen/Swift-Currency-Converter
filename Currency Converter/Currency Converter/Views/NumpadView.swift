@@ -14,35 +14,35 @@ struct NumpadView: View {
     @StateObject var currency: Currency
     @StateObject var currencies: Currencies
     
-    private let numberFormatter = NumberFormatter()
+    
+    
 
     
     var body: some View {
         NavigationView{
             List{
-                TextField("Enter Amount", value: $currency.calculatedValue, formatter: numberFormatter)
-                    
+                TextField("Enter Value", value: $currency.inputValue, formatter: currencies.numberFormatter)
                 Text(currency.code)
                 Button("Done"){
-                    
+                    dismiss()
                 }
             }
            
         }
-        .onAppear(perform: SetCurrencyAsSelected)
+        .onAppear(perform: ConfigureView)
+        
     
     }
     
-    func SetCurrencyAsSelected(){
-        currencies.SetInputValue(selectedCurrency: currency)
+    func ConfigureView() {
+        currencies.SetInputValues(selectedCurrency: currency)
         print(currencies.selectedCurrency.code + " is Selected")
+        
+        print("View Configured")
     }
     
-    func ConfigureNumberFormatter(){
-        numberFormatter.numberStyle = .currency
-        numberFormatter.maximumFractionDigits = 2
-        numberFormatter.currencyCode = currency.code
-    }
+
+    
 }
 
 struct NumpadView_Previews: PreviewProvider {
