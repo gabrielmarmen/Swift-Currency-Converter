@@ -14,10 +14,7 @@ class Currencies: ObservableObject {
     
     //Array with all available currencies
     @Published var all: [Currency]
-    
-    
-    
-    
+
     //Computed property that updates when a currency is enabled by the user
     var chosen: [Currency] {
         var tempArray = [Currency]()

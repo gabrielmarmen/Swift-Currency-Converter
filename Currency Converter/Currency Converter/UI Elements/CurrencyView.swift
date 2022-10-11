@@ -27,7 +27,11 @@ struct CurrencyView: View {
                     .scaledToFit()
                     .frame(height: 50)
                     .clipShape(RoundedRectangle(cornerRadius: 7))
-                    .shadow(color: .primary, radius: 1)
+                    .overlay(
+                            RoundedRectangle(cornerRadius: 7)
+                                .stroke(.gray.opacity(0.3), lineWidth: 1)
+                        )
+                    
                 // Button("Modify Currency"){
                 //    currency.calculatedValue = Double.random(in: 0.0...10)
                 // }
@@ -69,14 +73,14 @@ struct CurrencyView: View {
             .opacity(0.5)
             .blur(radius: 15)
         )
-        .clipShape(RoundedRectangle(cornerRadius: 7))
-        
+        .clipShape(RoundedRectangle(cornerRadius: 15))
+        .overlay(
+                RoundedRectangle(cornerRadius: 15)
+                    .strokeBorder(.gray.opacity(currency.isSelected ? 0.75 : 0.30), lineWidth: currency.isSelected ? 2 : 1)
+            )
         .sheet(isPresented: $isShowingNumberPad) {
             NumpadView(currency: currency, currencies: currencies)
         }
-        
-        
-        
     }
 }
 
