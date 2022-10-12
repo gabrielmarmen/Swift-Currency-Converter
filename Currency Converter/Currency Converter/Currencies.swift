@@ -71,6 +71,7 @@ class Currency: Identifiable, ObservableObject {
     
     var enabled = false
     var countries = [Country]()
+    var conversionToUsd = 1.0
     
     
     
