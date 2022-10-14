@@ -14,8 +14,10 @@ class Currencies: ObservableObject {
     
     //Array with all available currencies
     @Published var all: [Currency]
+    //Conversion rates for the conversions. For now it is using a sample file for testing purposes. Later its going to be downloading the json from the web.
+    var conversionRates = ExchangeRate.exempleExchangeRate.conversionRates
 
-    //Computed property that updates when a currency is enabled by the user
+    //Chosen currencies that appear in the main View
     var chosen: [Currency] {
         var tempArray = [Currency]()
         for currency in all {
@@ -27,7 +29,7 @@ class Currencies: ObservableObject {
     }
     
     
-    
+    //Returns the selected currency. If it fails it will return an undefined currency.
     var selectedCurrency: Currency {
         for currency in chosen {
             if currency.inputValue != nil {
@@ -37,27 +39,43 @@ class Currencies: ObservableObject {
         return Currency(code: "EUR", name: "Undefined")
     }
     
-    var numberFormatter: NumberFormatter {
-        let formatter = NumberFormatter()
-        formatter.currencyCode = selectedCurrency.code
-        formatter.numberStyle = .currency
-        formatter.maximumFractionDigits = 2
-        return formatter
-    }
+    //Creates a default numberFormatter.
+    //It is configured using the ConfigureNumberFormatter function to be formatting correctly with the type of currency
+    var numberFormatter = NumberFormatter()
+
     
     //Default Initializer
+    //Creating an empty array of currency and configuring the NumberFormatter
     init(){
         all = [Currency]()
+        ConfigureNumberFormatter()
     }
     
+    //Calculates all the conversions from the chosen currency. Executes everytime one of the chosen currency's inputValue changes.
+    func CalculateConversions() {
+        for currency in chosen {
+            if currency.inputValue != nil {
+                currency.calculatedValue = currency.inputValue!
+            }else {
+                currency.calculatedValue = (selectedCurrency.inputValue! / conversionRates[selectedCurrency.code]!) * conversionRates[currency.code]!
+            }
+        }
+    }
     
-    
+    //This function resets the input values to nil and set the newly selected Currency's input value to the same as the calculated one
+    //It is called in the CurrencyView when a currency is tapped.
     func SetInputValues(selectedCurrency: Currency) {
         for currency in chosen where currency.inputValue != nil {
             currency.inputValue = nil
         }
-        
         selectedCurrency.inputValue = selectedCurrency.calculatedValue
+    }
+    
+    //This function configures the number formatter so it is set up correctly for the type of currency (ex: EUR)
+    func ConfigureNumberFormatter() {
+        numberFormatter.currencyCode = selectedCurrency.code
+        numberFormatter.numberStyle = .currency
+        numberFormatter.maximumFractionDigits = 2
     }
 }
 
@@ -67,7 +85,7 @@ class Currency: Identifiable, ObservableObject {
     var name: String
     //The symbol for the currency might be needed in the future. From what I understand SwiftUI handles it nativelly though.
     @Published var inputValue: Double?
-    @Published var calculatedValue = 5.5 // Calculate this with the conversion rate if Input value is nil
+    @Published var calculatedValue = 0.0
     
     var enabled = false
     var countries = [Country]()
@@ -94,15 +112,9 @@ class Currency: Identifiable, ObservableObject {
         
     }
     
-    //Returns the value in the right format for the currency used
-    //Uses the input value if the currency is the one being edited if not uses the calculatedValue
+    //Returns the value in the right format taking into account the currency Used
     var formatedValue: String {
-        if inputValue == nil {
             return calculatedValue.formatted(.currency(code: code))
-        }
-        else {
-            return (inputValue ?? 0.0).formatted(.currency(code: code))
-        }
     }
     
     //Using local assets to Generate a Flag SwiftUI Image.

@@ -18,10 +18,12 @@ struct MainView: View {
                 .tabItem{
                     Label("Currencies", systemImage: "dollarsign.circle" )
                 }
+                .preferredColorScheme(.dark)
             SettingsView()
                 .tabItem{
                     Label("Settings", systemImage: "gearshape.circle" )
                 }
+                .preferredColorScheme(.dark)
         }
         
     }

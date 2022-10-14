@@ -6,7 +6,7 @@
 import Foundation
 
 // MARK: - ExchangeRateToUSD
-class ExchangeRateToUSD: Codable {
+class ExchangeRate: Codable {
     let result: String
     let documentation, termsOfUse: String
     let timeLastUpdateUnix: Int
@@ -15,6 +15,22 @@ class ExchangeRateToUSD: Codable {
     let timeNextUpdateUTC, baseCode: String
     let conversionRates: [String: Double]
 
+    
+    //Exemple Exchange Rate for test purposes. Decoded from a local Json called SampleExchangeRateToUSD.json
+    static var exempleExchangeRate: ExchangeRate {
+        let url = Bundle.main.path(forResource: "SampleExchangeRateToUSD", ofType: "json")
+        let data = try? String(contentsOfFile: url!).data(using: .utf8)
+        let exchangeRates = try? JSONDecoder().decode(ExchangeRate.self, from: data!)
+        
+        if let exchangeRates {
+                print("Loaded exemple exchange rates with " + (exchangeRates.baseCode) + " as the base code")
+        }
+        else {
+            print("There was an error loading the exemple exchange rates")
+        }
+        
+        return exchangeRates!
+    }
     enum CodingKeys: String, CodingKey {
         case result, documentation
         case termsOfUse = "terms_of_use"
@@ -37,4 +53,6 @@ class ExchangeRateToUSD: Codable {
         self.baseCode = baseCode
         self.conversionRates = conversionRates
     }
+    
+    
 }

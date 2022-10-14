@@ -22,6 +22,9 @@ struct NumpadView: View {
         NavigationView{
             List{
                 TextField("Enter Value", value: $currency.inputValue, formatter: currencies.numberFormatter)
+                    .onChange(of: currency.inputValue) { _ in
+                        currencies.CalculateConversions()
+                    }
                 Text(currency.code)
                 Button("Done"){
                     dismiss()
@@ -37,7 +40,6 @@ struct NumpadView: View {
     func ConfigureView() {
         currencies.SetInputValues(selectedCurrency: currency)
         print(currencies.selectedCurrency.code + " is Selected")
-        
         print("View Configured")
     }
     
