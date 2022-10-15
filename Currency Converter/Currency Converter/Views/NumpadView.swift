@@ -19,9 +19,11 @@ struct NumpadView: View {
 
     
     var body: some View {
-        NavigationView{
-            List{
-                TextField("Enter Value", value: $currency.inputValue, formatter: currencies.numberFormatter)
+        
+            
+                TextField("Enter Value", value: $currency.inputValue, formatter: currency.numberFormatter)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .keyboardType(.numberPad)
                     .onChange(of: currency.inputValue) { _ in
                         currencies.CalculateConversions()
                     }
@@ -29,18 +31,18 @@ struct NumpadView: View {
                 Button("Done"){
                     dismiss()
                 }
-            }
+            
            
-        }
+        
         .onAppear(perform: ConfigureView)
         
     
     }
     
+    
     func ConfigureView() {
         currencies.SetInputValues(selectedCurrency: currency)
         print(currencies.selectedCurrency.code + " is Selected")
-        print("View Configured")
     }
     
 

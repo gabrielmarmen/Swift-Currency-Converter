@@ -39,16 +39,13 @@ class Currencies: ObservableObject {
         return Currency(code: "EUR", name: "Undefined")
     }
     
-    //Creates a default numberFormatter.
-    //It is configured using the ConfigureNumberFormatter function to be formatting correctly with the type of currency
-    var numberFormatter = NumberFormatter()
+
 
     
     //Default Initializer
     //Creating an empty array of currency and configuring the NumberFormatter
     init(){
         all = [Currency]()
-        ConfigureNumberFormatter()
     }
     
     //Calculates all the conversions from the chosen currency. Executes everytime one of the chosen currency's inputValue changes.
@@ -57,7 +54,7 @@ class Currencies: ObservableObject {
             if currency.inputValue != nil {
                 currency.calculatedValue = currency.inputValue!
             }else {
-                currency.calculatedValue = (selectedCurrency.inputValue! / conversionRates[selectedCurrency.code]!) * conversionRates[currency.code]!
+                currency.calculatedValue = (selectedCurrency.inputValue ?? 0 / conversionRates[selectedCurrency.code]!) * conversionRates[currency.code]!
             }
         }
     }
@@ -68,15 +65,10 @@ class Currencies: ObservableObject {
         for currency in chosen where currency.inputValue != nil {
             currency.inputValue = nil
         }
-        selectedCurrency.inputValue = selectedCurrency.calculatedValue
+        selectedCurrency.inputValue = 0.0
     }
     
-    //This function configures the number formatter so it is set up correctly for the type of currency (ex: EUR)
-    func ConfigureNumberFormatter() {
-        numberFormatter.currencyCode = selectedCurrency.code
-        numberFormatter.numberStyle = .currency
-        numberFormatter.maximumFractionDigits = 2
-    }
+
 }
 
 class Currency: Identifiable, ObservableObject {
@@ -90,6 +82,9 @@ class Currency: Identifiable, ObservableObject {
     var enabled = false
     var countries = [Country]()
     var conversionToUsd = 1.0
+    //Creates a default numberFormatter.
+    //It is configured using the ConfigureNumberFormatter function to be formatting correctly with the type of currency
+    var numberFormatter = NumberFormatter()
     
     
     
@@ -97,6 +92,7 @@ class Currency: Identifiable, ObservableObject {
     init(code: String, name: String){
         self.code = code
         self.name = name
+        ConfigureNumberFormatter()
     }
     
     var id: String {
@@ -129,6 +125,12 @@ class Currency: Identifiable, ObservableObject {
         return Image(systemName: "x.square.fill")
     }
     
+    //This function configures the number formatter so it is set up correctly for the type of currency (ex: EUR)
+    func ConfigureNumberFormatter() {
+        numberFormatter.currencyCode = self.code
+        numberFormatter.numberStyle = .currency
+        numberFormatter.maximumFractionDigits = 2
+    }
     
     
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
