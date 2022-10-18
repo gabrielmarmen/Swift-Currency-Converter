@@ -81,7 +81,6 @@ class Currency: Identifiable, ObservableObject {
     
     var enabled = false
     var countries = [Country]()
-    var conversionToUsd = 1.0
     //Creates a default numberFormatter.
     //It is configured using the ConfigureNumberFormatter function to be formatting correctly with the type of currency
     var numberFormatter = NumberFormatter()

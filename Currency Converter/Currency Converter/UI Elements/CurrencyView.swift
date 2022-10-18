@@ -80,6 +80,7 @@ struct CurrencyView: View {
             )
         .sheet(isPresented: $isShowingNumberPad) {
             NumpadView(currency: currency, currencies: currencies)
+                .presentationDetents([.height(225)])
         }
     }
 }

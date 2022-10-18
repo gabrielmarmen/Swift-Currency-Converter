@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		600183AE28FEC31100C40AE6 /* Introspect in Frameworks */ = {isa = PBXBuildFile; productRef = 600183AD28FEC31100C40AE6 /* Introspect */; };
 		60191F2628F83B4800313FC4 /* ExchangeRate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60191F2528F83B4800313FC4 /* ExchangeRate.swift */; };
 		60191F2A28F83C9700313FC4 /* SampleExchangeRateToUSD.json in Resources */ = {isa = PBXBuildFile; fileRef = 60191F2928F83C9700313FC4 /* SampleExchangeRateToUSD.json */; };
 		60AA10CD28EDBCD500CB3246 /* Currency_ConverterApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60AA10CC28EDBCD500CB3246 /* Currency_ConverterApp.swift */; };
@@ -46,6 +47,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				60AA10DE28EDC1DE00CB3246 /* FlagKit in Frameworks */,
+				600183AE28FEC31100C40AE6 /* Introspect in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -130,6 +132,7 @@
 			name = "Currency Converter";
 			packageProductDependencies = (
 				60AA10DD28EDC1DE00CB3246 /* FlagKit */,
+				600183AD28FEC31100C40AE6 /* Introspect */,
 			);
 			productName = "Currency Converter";
 			productReference = 60AA10C928EDBCD500CB3246 /* Currency Converter.app */;
@@ -161,6 +164,7 @@
 			mainGroup = 60AA10C028EDBCD500CB3246;
 			packageReferences = (
 				60AA10DC28EDC1DE00CB3246 /* XCRemoteSwiftPackageReference "FlagKit" */,
+				600183AC28FEC31100C40AE6 /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */,
 			);
 			productRefGroup = 60AA10CA28EDBCD500CB3246 /* Products */;
 			projectDirPath = "";
@@ -401,6 +405,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		600183AC28FEC31100C40AE6 /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/siteline/SwiftUI-Introspect.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.1.4;
+			};
+		};
 		60AA10DC28EDC1DE00CB3246 /* XCRemoteSwiftPackageReference "FlagKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/madebybowtie/FlagKit.git";
@@ -412,6 +424,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		600183AD28FEC31100C40AE6 /* Introspect */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 600183AC28FEC31100C40AE6 /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */;
+			productName = Introspect;
+		};
 		60AA10DD28EDC1DE00CB3246 /* FlagKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 60AA10DC28EDC1DE00CB3246 /* XCRemoteSwiftPackageReference "FlagKit" */;
