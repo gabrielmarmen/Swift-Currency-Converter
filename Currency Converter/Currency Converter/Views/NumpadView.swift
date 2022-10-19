@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Introspect
+import SwiftUIKit
 
 struct NumpadView: View {
     
@@ -14,7 +15,6 @@ struct NumpadView: View {
     @Environment(\.dismiss) var dismiss
     @StateObject var currency: Currency
     @StateObject var currencies: Currencies
-    @State private var fieldValue = 0.0
     @FocusState private var textFieldIsFocused: Bool
     
     
@@ -26,10 +26,14 @@ struct NumpadView: View {
             VStack {
                 Text("Enter Amount")
                     .font(.largeTitle.bold())
-                TextField("Enter currency amount", value: $fieldValue, formatter: currency.numberFormatter)
+                
+                    
+                CurrencyTextField("Amount", value: $currency.inputValue, alwaysShowFractions: false, numberOfDecimalPlaces: currency.maxDecimal, currencySymbol: currency.symbol)
                     .padding(.bottom)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
                     .keyboardType(.numberPad)
+                    .introspectTextField { textField in
+                        textField.becomeFirstResponder()
+                    }
                     .onChange(of: currency.inputValue) { _ in
                         currencies.CalculateConversions()
                     }
@@ -38,17 +42,14 @@ struct NumpadView: View {
                             dismiss()
                         }
                     }
-                    .onAppear(perform: ConfigureView)
-                    .introspectTextField { textField in
-                        textField.becomeFirstResponder()
-                    }
                     .focused($textFieldIsFocused)
                 
+                
+                
                 Button(){
-                    currency.inputValue = fieldValue
                     dismiss()
                 }label: {
-                    Label("Convert", systemImage: "arrow.left.arrow.right")
+                    Label("Done", systemImage: "checkmark.circle.fill")
                         .foregroundColor(.white)
                         .font(.headline.bold())
                         .frame(maxWidth: .infinity)
@@ -58,24 +59,18 @@ struct NumpadView: View {
                 .contentShape(Rectangle())
                 .background(.blue)
                 .clipShape(RoundedRectangle(cornerRadius: 10))
-                
-                
-
-                
             }
             .padding(.horizontal)
             .navigationTitle("Enter Amount")
+            .onAppear(perform: ConfigureView)
+            
     }
     
     
     func ConfigureView() {
-        currencies.SetInputValues(selectedCurrency: currency)
-        fieldValue = currency.calculatedValue
-        print(currencies.selectedCurrency.code + " is Selected")
+        currencies.SetAsSelected(selectedCurrency: currency)
+        
     }
-    
-
-    
 }
 
 struct NumpadView_Previews: PreviewProvider {

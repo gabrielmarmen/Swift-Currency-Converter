@@ -32,11 +32,11 @@ class Currencies: ObservableObject {
     //Returns the selected currency. If it fails it will return an undefined currency.
     var selectedCurrency: Currency {
         for currency in chosen {
-            if currency.inputValue != nil {
+            if currency.isSelected {
                 return currency
             }
         }
-        return Currency(code: "EUR", name: "Undefined")
+        return Currency.exempleCurrencyFrance()
     }
     
 
@@ -53,19 +53,22 @@ class Currencies: ObservableObject {
         for currency in chosen {
             if currency.inputValue != nil {
                 currency.calculatedValue = currency.inputValue!
+                print(currency.code + " input value was " + String(currency.inputValue!) + " and it's calculated value now is : " + String(currency.calculatedValue))
             }else {
-                currency.calculatedValue = (selectedCurrency.inputValue ?? 0 / conversionRates[selectedCurrency.code]!) * conversionRates[currency.code]!
+                currency.calculatedValue = selectedCurrency.inputValue! / conversionRates[selectedCurrency.code]! * conversionRates[currency.code]!
             }
         }
+        print("Calculated Conversions")
     }
     
     //This function resets the input values to nil and set the newly selected Currency's input value to the same as the calculated one
     //It is called in the CurrencyView when a currency is tapped.
-    func SetInputValues(selectedCurrency: Currency) {
+    func SetAsSelected(selectedCurrency: Currency) {
         for currency in chosen where currency.inputValue != nil {
             currency.inputValue = nil
         }
         selectedCurrency.inputValue = 0.0
+        print(selectedCurrency.code + " was selected")
     }
     
 
@@ -75,7 +78,8 @@ class Currency: Identifiable, ObservableObject {
     
     var code: String
     var name: String
-    //The symbol for the currency might be needed in the future. From what I understand SwiftUI handles it nativelly though.
+    var symbol: String
+    var maxDecimal: Int
     @Published var inputValue: Double?
     @Published var calculatedValue = 0.0
     
@@ -88,9 +92,11 @@ class Currency: Identifiable, ObservableObject {
     
     
     
-    init(code: String, name: String){
+    init(code: String, name: String, symbol: String, maxDecimal: Int){
         self.code = code
         self.name = name
+        self.symbol = symbol
+        self.maxDecimal = maxDecimal
         ConfigureNumberFormatter()
     }
     
@@ -101,15 +107,15 @@ class Currency: Identifiable, ObservableObject {
     var isSelected: Bool {
         if self.inputValue != nil {
             return true
-        } else {
+        }
+        else {
             return false
         }
-        
     }
     
     //Returns the value in the right format taking into account the currency Used
     var formatedValue: String {
-            return calculatedValue.formatted(.currency(code: code))
+            return numberFormatter.string(from: NSNumber(value: calculatedValue)) ?? "Error"
     }
     
     //Using local assets to Generate a Flag SwiftUI Image.
@@ -126,9 +132,9 @@ class Currency: Identifiable, ObservableObject {
     
     //This function configures the number formatter so it is set up correctly for the type of currency (ex: EUR)
     func ConfigureNumberFormatter() {
-        numberFormatter.currencyCode = self.code
         numberFormatter.numberStyle = .currency
-        numberFormatter.maximumFractionDigits = 2
+        numberFormatter.currencySymbol = self.symbol
+        numberFormatter.maximumFractionDigits = maxDecimal
     }
     
     
@@ -136,7 +142,7 @@ class Currency: Identifiable, ObservableObject {
     
     //Returns an exemple Currency of Afghanistan for testing purposes
     static func exempleCurrencyAfghanistan() -> Currency {
-        let exempleCurrency = Currency(code: "AFN", name: "Afghani")
+        let exempleCurrency = Currency(code: "AFN", name: "Afghani", symbol: "؋", maxDecimal: 0)
         let exempleCountry = Country(name: "Afghanistan", code: "AF")
         exempleCurrency.enabled = true
         
@@ -146,7 +152,7 @@ class Currency: Identifiable, ObservableObject {
     }
     //Returns an exemple Currency of France for testing purposes
     static func exempleCurrencyFrance() -> Currency {
-        let exempleCurrency = Currency(code: "EUR", name: "Euro")
+        let exempleCurrency = Currency(code: "EUR", name: "Euro", symbol: "€", maxDecimal: 2)
         let exempleCountry = Country(name: "France", code: "FR")
         exempleCurrency.enabled = true
         
