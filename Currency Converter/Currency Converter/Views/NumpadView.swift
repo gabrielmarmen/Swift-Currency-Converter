@@ -15,6 +15,7 @@ struct NumpadView: View {
     @Environment(\.dismiss) var dismiss
     @StateObject var currency: Currency
     @StateObject var currencies: Currencies
+    @State private var textFieldValue: Double? = 0.0
     @FocusState private var textFieldIsFocused: Bool
     
     
@@ -28,13 +29,17 @@ struct NumpadView: View {
                     .font(.largeTitle.bold())
                 
                     
-                CurrencyTextField("Amount", value: $currency.inputValue, alwaysShowFractions: false, numberOfDecimalPlaces: currency.maxDecimal, currencySymbol: currency.symbol)
+                CurrencyTextField("Amount", value: $textFieldValue, alwaysShowFractions: false, numberOfDecimalPlaces: currency.maxDecimal, currencySymbol: currency.symbol)
+                    .foregroundColor(.red)
+                    .font(.system(size: 24, weight: .bold, design: .default))
+                    .multilineTextAlignment(TextAlignment.center)
                     .padding(.bottom)
                     .keyboardType(.numberPad)
                     .introspectTextField { textField in
                         textField.becomeFirstResponder()
                     }
-                    .onChange(of: currency.inputValue) { _ in
+                    .onChange(of: textFieldValue) { _ in
+                        currency.inputValue = textFieldValue
                         currencies.CalculateConversions()
                     }
                     .onChange(of: textFieldIsFocused) { _ in
