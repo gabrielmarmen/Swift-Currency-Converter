@@ -53,9 +53,22 @@ class Currencies: ObservableObject {
         for currency in chosen {
             if currency.inputValue != nil {
                 currency.calculatedValue = currency.inputValue!
-                print(currency.code + " input value was " + String(currency.inputValue!) + " and it's calculated value now is : " + String(currency.calculatedValue))
+                
             }else {
-                currency.calculatedValue = selectedCurrency.inputValue! / conversionRates[selectedCurrency.code]! * conversionRates[currency.code]!
+                if let selectedCurrencyConversionRate = conversionRates[selectedCurrency.code]{
+                    if let conversionRate = conversionRates[currency.code]{
+                        currency.calculatedValue = selectedCurrency.inputValue! / selectedCurrencyConversionRate * conversionRate
+                    }
+                    else {
+                        print("Failed to find conversion rate.")
+                        currency.calculatedValue = nil
+                    }
+                }else {
+                    print("Failed to find conversion rate.")
+                    currency.calculatedValue = nil
+                }
+                
+                
             }
         }
         print("Calculated Conversions")
@@ -74,14 +87,20 @@ class Currencies: ObservableObject {
 
 }
 
-class Currency: Identifiable, ObservableObject {
+class Currency: Identifiable, ObservableObject, Equatable {
+    static func == (lhs: Currency, rhs: Currency) -> Bool {
+        if lhs.code == rhs.code {return true}
+        else {return false}
+        
+    }
+    
     
     var code: String
     var name: String
     var symbol: String
     var maxDecimal: Int
     @Published var inputValue: Double?
-    @Published var calculatedValue = 0.0
+    @Published var calculatedValue: Double? = 0.0
     
     var enabled = false
     var countries = [Country]()
@@ -115,7 +134,11 @@ class Currency: Identifiable, ObservableObject {
     
     //Returns the value in the right format taking into account the currency Used
     var formatedValue: String {
-            return numberFormatter.string(from: NSNumber(value: calculatedValue)) ?? "Error"
+        
+        if calculatedValue == nil {return "N/D"}
+        else {return numberFormatter.string(from: NSNumber(value: calculatedValue!)) ?? "Error"}
+        
+            
     }
     
     //Using local assets to Generate a Flag SwiftUI Image.

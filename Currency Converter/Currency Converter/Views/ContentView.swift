@@ -36,8 +36,13 @@ struct ContentView: View {
             }
             .toolbar{
                 Button("Add"){
-                    currencies.all.append(Currency.exempleCurrencyAfghanistan())
-                    currencies.all.append(Currency.exempleCurrencyFrance())
+                    if currencies.all.isEmpty{
+                        currencies.all = JsonCreator.getCurrencyArray()
+                    }
+                    
+                    for currency in currencies.all {
+                        currency.enabled = true
+                    }
                 }
             }
             .navigationTitle("Currencies")

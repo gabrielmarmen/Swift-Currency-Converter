@@ -18,10 +18,6 @@ struct NumpadView: View {
     @State private var textFieldValue: Double? = 0.0
     @FocusState private var textFieldIsFocused: Bool
     
-    
-    
-
-    
     var body: some View {
         
             VStack {
@@ -30,8 +26,7 @@ struct NumpadView: View {
                 
                     
                 CurrencyTextField("Amount", value: $textFieldValue, alwaysShowFractions: false, numberOfDecimalPlaces: currency.maxDecimal, currencySymbol: currency.symbol)
-                    .foregroundColor(.red)
-                    .font(.system(size: 24, weight: .bold, design: .default))
+                    .font(.largeTitle)
                     .multilineTextAlignment(TextAlignment.center)
                     .padding(.bottom)
                     .keyboardType(.numberPad)

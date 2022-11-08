@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6046560B2918A64C00B64B7A /* IntermediateCountry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6046560A2918A64C00B64B7A /* IntermediateCountry.swift */; };
 		60AA10FA28EF433D00CB3246 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60AA10F928EF433D00CB3246 /* main.swift */; };
 /* End PBXBuildFile section */
 
@@ -23,6 +24,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		604656072918A30A00B64B7A /* countries.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = countries.json; path = "../../Currency Converter/Currency Converter/countries.json"; sourceTree = "<group>"; };
+		6046560A2918A64C00B64B7A /* IntermediateCountry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntermediateCountry.swift; sourceTree = "<group>"; };
 		60AA10F628EF433D00CB3246 /* Json Creator (Currency Converter) */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Json Creator (Currency Converter)"; sourceTree = BUILT_PRODUCTS_DIR; };
 		60AA10F928EF433D00CB3246 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -57,7 +60,9 @@
 		60AA10F828EF433D00CB3246 /* Json Creator (Currency Converter) */ = {
 			isa = PBXGroup;
 			children = (
+				604656072918A30A00B64B7A /* countries.json */,
 				60AA10F928EF433D00CB3246 /* main.swift */,
+				6046560A2918A64C00B64B7A /* IntermediateCountry.swift */,
 			);
 			path = "Json Creator (Currency Converter)";
 			sourceTree = "<group>";
@@ -121,6 +126,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				60AA10FA28EF433D00CB3246 /* main.swift in Sources */,
+				6046560B2918A64C00B64B7A /* IntermediateCountry.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

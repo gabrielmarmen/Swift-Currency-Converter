@@ -25,8 +25,11 @@ struct MainView: View {
                 }
                 .preferredColorScheme(.dark)
         }
+        .onAppear(perform: JsonCreator.run)
         
     }
+    
+    
 }
 
 struct MainView_Previews: PreviewProvider {

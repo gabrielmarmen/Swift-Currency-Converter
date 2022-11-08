@@ -31,6 +31,7 @@ class ExchangeRate: Codable {
         
         return exchangeRates!
     }
+    
     enum CodingKeys: String, CodingKey {
         case result, documentation
         case termsOfUse = "terms_of_use"
