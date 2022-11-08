@@ -147,6 +147,7 @@ class Currency: Identifiable, ObservableObject, Equatable {
     var flagImage: Image {
         guard code != "EUR" else {return Image("eu") }
         guard code != "GBP" else {return Image("gb") }
+        guard code != "USD" else {return Image("us") }
         if let unWrappedcode = countries.first?.code {
             return Image(unWrappedcode.lowercased())
         }

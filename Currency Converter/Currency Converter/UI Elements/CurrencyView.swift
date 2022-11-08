@@ -24,8 +24,8 @@ struct CurrencyView: View {
             HStack{
                 currency.flagImage
                     .resizable()
-                    .scaledToFit()
-                    .frame(height: 50)
+                    .scaledToFill()
+                    .frame(width: 70, height: 50)
                     .clipShape(RoundedRectangle(cornerRadius: 7))
                     .overlay(
                             RoundedRectangle(cornerRadius: 7)

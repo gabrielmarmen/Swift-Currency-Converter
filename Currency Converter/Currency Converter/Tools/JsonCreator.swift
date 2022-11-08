@@ -40,7 +40,7 @@ struct JsonCreator {
             }
             
             let tempCountry = Country(name: intermediateCountry.name, code: intermediateCountry.isoAlpha2)
-            let tempCurrency = Currency(code: intermediateCountry.currency.code, name: intermediateCountry.currency.name, symbol: tempCurrencySymbol, maxDecimal: getMaxDecimal(in: decimalConversionTable, for: intermediateCountry.currency.code))
+            let tempCurrency = Currency(code: intermediateCountry.currency.code, name: getFullName(in: decimalConversionTable, for: intermediateCountry.currency.code), symbol: tempCurrencySymbol, maxDecimal: getMaxDecimal(in: decimalConversionTable, for: intermediateCountry.currency.code))
             
             if !customCurrencyArray.contains(tempCurrency) {
                 tempCurrency.countries.append(tempCountry)
@@ -57,6 +57,11 @@ struct JsonCreator {
     static func getMaxDecimal(in conversionTable: [IntermediateCurrencyDecimalConversion], for code: String) -> Int{
         let conversionEntry = conversionTable.first(where: {$0.code == code})
         return conversionEntry?.decimals ?? 2
+    }
+    
+    static func getFullName(in conversionTable: [IntermediateCurrencyDecimalConversion], for code: String) -> String{
+        let conversionEntry = conversionTable.first(where: {$0.code == code})
+        return conversionEntry?.name ?? "None"
     }
     
     static func getIntermediateCountries() -> [IntermediateCountry] {
