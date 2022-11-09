@@ -20,12 +20,13 @@ struct CurrencyView: View {
 
     
     var body: some View {
+        
         HStack{
             HStack{
                 currency.flagImage
                     .resizable()
                     .scaledToFill()
-                    .frame(width: 70, height: 50)
+                    .frame(width: 60, height: 45)
                     .clipShape(RoundedRectangle(cornerRadius: 7))
                     .overlay(
                             RoundedRectangle(cornerRadius: 7)
@@ -39,32 +40,35 @@ struct CurrencyView: View {
                     Text(currency.code)
                         .font(.headline)
                         .foregroundColor(.primary)
+                        .frame(maxWidth: 100, maxHeight: 5, alignment: .leading)
+                        .padding(.bottom, 7)
+                        
                     Text(currency.name)
                         .font(.subheadline)
                         .foregroundColor(.secondary)
+                        .frame(maxWidth: 500, maxHeight: 5, alignment: .leading)
+                       
                 }
-                
             }
-            
-            Spacer()
             VStack{
                 Text(String(currency.formatedValue))
                     .foregroundColor(.primary)
-                    .font(.title)
+                    .font(.headline)
                     .padding(.all, 5)
-                    
-            }
-            .onTapGesture {
-                isShowingNumberPad = true
             }
             .background(
                 Rectangle()
                     .background(Material.thinMaterial.opacity(0.7))
                     .clipShape(RoundedRectangle(cornerRadius: 7))
             )
+            .frame( maxHeight: 30, alignment: .trailing)
+            .onTapGesture {
+                isShowingNumberPad = true
+            }
+            
         }
         .padding()
-        .frame(maxWidth: .infinity, minHeight: 100)
+        .frame(maxWidth: .infinity, minHeight: 75)
         .background(
             currency.flagImage
             .resizable()

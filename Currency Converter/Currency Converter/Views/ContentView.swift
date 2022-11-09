@@ -10,6 +10,7 @@ import SwiftUI
 struct ContentView: View {
     
     @StateObject private var currencies = Currencies()
+    @State private var addViewIsPresented = false
     
     
     //This returns the currently selected currency (One being modified)
@@ -31,7 +32,7 @@ struct ContentView: View {
                 ForEach(currencies.chosen){ currency in
                     CurrencyView(currency: currency, currencies: currencies)
                         .padding(.horizontal)
-                        .padding(.bottom, 10)
+                        .padding(.bottom, 1)
                 }
             }
             .toolbar{
@@ -39,14 +40,14 @@ struct ContentView: View {
                     if currencies.all.isEmpty{
                         currencies.all = JsonCreator.getCurrencyArray()
                     }
-                    
-                    for currency in currencies.all {
-                        currency.enabled = true
-                    }
+                    addViewIsPresented = true
                 }
             }
             .navigationTitle("Currencies")
             
+        }
+        .sheet(isPresented: $addViewIsPresented){
+            AddView(allCurrencies: $currencies.all)
         }
     }
 }

@@ -101,8 +101,8 @@ class Currency: Identifiable, ObservableObject, Equatable {
     var maxDecimal: Int
     @Published var inputValue: Double?
     @Published var calculatedValue: Double? = 0.0
+    @Published var enabled = false
     
-    var enabled = false
     var countries = [Country]()
     //Creates a default numberFormatter.
     //It is configured using the ConfigureNumberFormatter function to be formatting correctly with the type of currency
