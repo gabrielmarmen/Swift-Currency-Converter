@@ -23,7 +23,8 @@ class ExchangeRate: Codable {
         let exchangeRates = try? JSONDecoder().decode(ExchangeRate.self, from: data!)
         
         if let exchangeRates {
-                print("Loaded exemple exchange rates with " + (exchangeRates.baseCode) + " as the base code")
+            print("Loaded exemple exchange rates with " + (exchangeRates.baseCode) + " as the base code")
+            print("There are " + String(exchangeRates.conversionRates.count) + " currencies to convert to.")
         }
         else {
             print("There was an error loading the exemple exchange rates")

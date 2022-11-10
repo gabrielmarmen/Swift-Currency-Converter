@@ -29,7 +29,7 @@ struct JsonCreator {
     static func convertToCustomCurrencyArray(countries: [IntermediateCountry], decimalConversionTable: [IntermediateCurrencyDecimalConversion]) -> [Currency]{
         
         var customCurrencyArray = [Currency]()
-        
+        let exempleExchangeRate = ExchangeRate.exempleExchangeRate
         for intermediateCountry in countries {
             var tempCurrencySymbol: String
             if intermediateCountry.currency.symbol.get() != "There is no symbol" {
@@ -40,17 +40,23 @@ struct JsonCreator {
             }
             
             let tempCountry = Country(name: intermediateCountry.name, code: intermediateCountry.isoAlpha2)
-            let tempCurrency = Currency(code: intermediateCountry.currency.code, name: getFullName(in: decimalConversionTable, for: intermediateCountry.currency.code), symbol: tempCurrencySymbol, maxDecimal: getMaxDecimal(in: decimalConversionTable, for: intermediateCountry.currency.code))
+            let tempCurrency = Currency(code: intermediateCountry.currency.code, name: getFullName(in: decimalConversionTable, for: intermediateCountry.currency), symbol: tempCurrencySymbol, maxDecimal: getMaxDecimal(in: decimalConversionTable, for: intermediateCountry.currency.code))
             
             if !customCurrencyArray.contains(tempCurrency) {
-                tempCurrency.countries.append(tempCountry)
-                customCurrencyArray.append(tempCurrency)
+                if exempleExchangeRate.conversionRates[tempCurrency.code] != nil {
+                    tempCurrency.countries.append(tempCountry)
+                    customCurrencyArray.append(tempCurrency)
+                }
+                else {
+                    print("Could not find " + tempCurrency.code)
+                }
             }
-            else {
+            else{
                 customCurrencyArray[customCurrencyArray.firstIndex(of: tempCurrency)!].countries.append(tempCountry)
             }
             
         }
+        print("There are " + String(customCurrencyArray.count) + " currencies inside the array after corrections")
         return customCurrencyArray
     }
     
@@ -59,9 +65,9 @@ struct JsonCreator {
         return conversionEntry?.decimals ?? 2
     }
     
-    static func getFullName(in conversionTable: [IntermediateCurrencyDecimalConversion], for code: String) -> String{
-        let conversionEntry = conversionTable.first(where: {$0.code == code})
-        return conversionEntry?.name ?? "None"
+    static func getFullName(in conversionTable: [IntermediateCurrencyDecimalConversion], for currency: IntermediateCurrency) -> String{
+        let conversionEntry = conversionTable.first(where: {$0.code == currency.code})
+        return conversionEntry?.name ?? currency.name
     }
     
     static func getIntermediateCountries() -> [IntermediateCountry] {

@@ -47,7 +47,7 @@ struct AddView: View {
                 List{
                     if !currencies.chosen.isEmpty && searchString == ""{
                         Section{
-                            ForEach($currencies.all){ $currency in
+                            ForEach(currencies.all){ currency in
                                 if currency.enabled {
                                     HStack{
                                         currency.flagImage
@@ -58,13 +58,15 @@ struct AddView: View {
                                         Text(currency.name)
                                             .font(.headline)
                                         Spacer()
-                                        CheckBoxView(checked: $currency.enabled)
+                                        Image(systemName: currency.enabled ? "checkmark.circle.fill" : "circle")
+                                            .foregroundColor(currency.enabled ? Color(UIColor.systemBlue) : Color.secondary)
                                     }
                                     .contentShape(Rectangle())
                                     .onTapGesture {
                                         withAnimation{
                                             currencies.objectWillChange.send()
                                             currency.enabled.toggle()
+                                            
                                         }
                                     }
                                 }
@@ -110,9 +112,12 @@ struct AddView: View {
                 .navigationTitle("Add Currencies")
                 .navigationBarTitleDisplayMode(.inline)
                 .animation(.easeInOut, value: searchResults)
-            
-            
         }
+        .onChange(of: currencies.chosen) { _ in
+            
+            currencies.CalculateConversions()
+        }
+        
     }
 }
 struct AddView_Previews: PreviewProvider {

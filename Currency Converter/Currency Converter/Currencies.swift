@@ -59,7 +59,9 @@ class Currencies: ObservableObject {
             }else {
                 if let selectedCurrencyConversionRate = conversionRates[selectedCurrency.code]{
                     if let conversionRate = conversionRates[currency.code]{
-                        currency.calculatedValue = selectedCurrency.inputValue! / selectedCurrencyConversionRate * conversionRate
+                        if let inputValue = selectedCurrency.inputValue{
+                            currency.calculatedValue = inputValue / selectedCurrencyConversionRate * conversionRate
+                        }
                     }
                     else {
                         print("Failed to find conversion rate.")
