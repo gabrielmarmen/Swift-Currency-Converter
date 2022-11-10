@@ -13,17 +13,7 @@ struct ContentView: View {
     @State private var addViewIsPresented = false
     
     
-    //This returns the currently selected currency (One being modified)
-    //Loop through the currencies to see which one has a non nil input.
-    //Every currencies is supposed to have a nil value except the one that is currenctly selected to be converted
-    var selectedCurrency: Currency? {
-        for currency in currencies.chosen {
-            if currency.inputValue != nil {
-                return currency
-            }
-        }
-        return nil
-    }
+    
     
     
     var body: some View {
@@ -36,7 +26,7 @@ struct ContentView: View {
                 }
             }
             .toolbar{
-                Button("Add"){
+                Button("Edit"){
                     if currencies.all.isEmpty{
                         currencies.all = JsonCreator.getCurrencyArray()
                     }
@@ -47,7 +37,7 @@ struct ContentView: View {
             
         }
         .sheet(isPresented: $addViewIsPresented){
-            AddView(allCurrencies: $currencies.all)
+            AddView(currencies: currencies)
         }
     }
 }

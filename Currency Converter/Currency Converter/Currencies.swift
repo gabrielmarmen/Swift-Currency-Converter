@@ -29,7 +29,9 @@ class Currencies: ObservableObject {
     }
     
     
-    //Returns the selected currency. If it fails it will return an undefined currency.
+    //This returns the currently selected currency (One being modified)
+    //Loop through the currencies to see which one has a non nil input.
+    //Every currencies is supposed to have a nil value except the one that is currenctly selected to be converted
     var selectedCurrency: Currency {
         for currency in chosen {
             if currency.isSelected {
@@ -67,8 +69,6 @@ class Currencies: ObservableObject {
                     print("Failed to find conversion rate.")
                     currency.calculatedValue = nil
                 }
-                
-                
             }
         }
         print("Calculated Conversions")
@@ -88,20 +88,17 @@ class Currencies: ObservableObject {
 }
 
 class Currency: Identifiable, ObservableObject, Equatable {
-    static func == (lhs: Currency, rhs: Currency) -> Bool {
-        if lhs.code == rhs.code {return true}
-        else {return false}
-        
-    }
     
+    
+    @Published var inputValue: Double?
+    @Published var calculatedValue: Double? = 0.0
+    @Published var enabled = false
     
     var code: String
     var name: String
     var symbol: String
     var maxDecimal: Int
-    @Published var inputValue: Double?
-    @Published var calculatedValue: Double? = 0.0
-    @Published var enabled = false
+    
     
     var countries = [Country]()
     //Creates a default numberFormatter.
@@ -134,11 +131,10 @@ class Currency: Identifiable, ObservableObject, Equatable {
     
     //Returns the value in the right format taking into account the currency Used
     var formatedValue: String {
-        
+
         if calculatedValue == nil {return "N/D"}
         else {return numberFormatter.string(from: NSNumber(value: calculatedValue!)) ?? "Error"}
-        
-            
+
     }
     
     //Using local assets to Generate a Flag SwiftUI Image.
@@ -161,6 +157,14 @@ class Currency: Identifiable, ObservableObject, Equatable {
         numberFormatter.maximumFractionDigits = maxDecimal
     }
     
+    func disable() {
+        self.enabled = false
+    }
+    
+    static func == (lhs: Currency, rhs: Currency) -> Bool {
+        if lhs.code == rhs.code {return true}
+        else {return false}
+    }
     
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     

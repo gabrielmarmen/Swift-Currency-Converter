@@ -9,29 +9,120 @@ import SwiftUI
 
 struct AddView: View {
     
-    @Binding var allCurrencies: [Currency]
+    @ObservedObject var currencies: Currencies
     
-    var body: some View {
-        NavigationView{
-            List{
-                ForEach($allCurrencies){ $currency in
-                    HStack{
-                        Text(currency.name)
-                        Spacer()
-                        CheckBoxView(checked: $currency.enabled)
+    @State private var searchString: String = ""
+    
+    
+    var searchResults: [Currency] {
+        if searchString == "" {
+            return currencies.all
+        }
+        else{
+            var filteredCurrencies = [Currency]()
+            for currency in currencies.all {
+                if currency.name.range(of: searchString, options: .caseInsensitive) != nil {
+                    filteredCurrencies.append(currency)
+                    continue
+                }
+                else if currency.code.range(of: searchString, options: .caseInsensitive) != nil
+                {
+                    filteredCurrencies.append(currency)
+                    continue
+                }
+                for country in currency.countries {
+                    if country.name.range(of: searchString, options: .caseInsensitive) != nil  {
+                        filteredCurrencies.append(currency)
+                        break
                     }
                 }
             }
-            .listStyle(.plain)
-            .navigationTitle("Sheesh")
+            return filteredCurrencies
+        }
+    }
+    
+    
+    var body: some View {
+        NavigationView{
+                List{
+                    if !currencies.chosen.isEmpty && searchString == ""{
+                        Section{
+                            ForEach($currencies.all){ $currency in
+                                if currency.enabled {
+                                    HStack{
+                                        currency.flagImage
+                                            .resizable()
+                                            .scaledToFill()
+                                            .frame(width: 60, height: 40)
+                                            .clipShape(RoundedRectangle(cornerRadius: 7))
+                                        Text(currency.name)
+                                            .font(.headline)
+                                        Spacer()
+                                        CheckBoxView(checked: $currency.enabled)
+                                    }
+                                    .contentShape(Rectangle())
+                                    .onTapGesture {
+                                        withAnimation{
+                                            currencies.objectWillChange.send()
+                                            currency.enabled.toggle()
+                                        }
+                                    }
+                                }
+                            }
+                        }header: {
+                            Text("Selected Currencies")
+                        }
+                    }
+                    Section{
+                        ForEach(searchResults){ currency in
+                            HStack{
+                                currency.flagImage
+                                    .resizable()
+                                    .scaledToFill()
+                                    .frame(width: 60, height: 40)
+                                    .clipShape(RoundedRectangle(cornerRadius: 7))
+                                
+                                Text(currency.name)
+                                    .font(currency.enabled ? .headline : .body)
+                                    .foregroundColor(currency.enabled ? .primary : .secondary)
+                                    .animation(.linear.speed(5), value: currency.enabled)
+                                Spacer()
+                                Image(systemName: currency.enabled ? "checkmark.circle.fill" : "circle")
+                                    .foregroundColor(currency.enabled ? Color(UIColor.systemBlue) : Color.secondary)
+                                    
+                            }
+                            .contentShape(Rectangle())
+                            .onTapGesture {
+                                withAnimation{
+                                    currencies.objectWillChange.send()
+                                    currency.enabled.toggle()
+                                }
+                            }
+                            
+                        }
+                    }header: {
+                        Text(searchString == "" ? "All Currencies" : "Search Results")
+                    }
+                    
+                }
+                .searchable(text: $searchString, placement: .navigationBarDrawer(displayMode: .always), prompt: "Search by currency name, code or country")
+                .listStyle(.plain)
+                .navigationTitle("Add Currencies")
+                .navigationBarTitleDisplayMode(.inline)
+                .animation(.easeInOut, value: searchResults)
+            
+            
         }
     }
 }
-
 struct AddView_Previews: PreviewProvider {
-    @State static var allCurrencies = [Currency.exempleCurrencyFrance(), Currency.exempleCurrencyAfghanistan()]
+    static var allCurrencies = Currencies()
     static var previews: some View {
         
-        AddView(allCurrencies: $allCurrencies)
+        AddView(currencies: allCurrencies)
+            .onAppear {
+                allCurrencies.all.append(Currency.exempleCurrencyAfghanistan())
+                allCurrencies.all.append(Currency.exempleCurrencyFrance())
+            }
     }
 }
