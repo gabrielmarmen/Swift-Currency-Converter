@@ -13,9 +13,6 @@ struct ContentView: View {
     @State private var addViewIsPresented = false
     
     
-    
-    
-    
     var body: some View {
         NavigationView{
             ScrollView{
@@ -27,9 +24,6 @@ struct ContentView: View {
             }
             .toolbar{
                 Button("Edit"){
-                    if currencies.all.isEmpty{
-                        currencies.all = JsonCreator.getCurrencyArray()
-                    }
                     addViewIsPresented = true
                 }
             }

@@ -47,7 +47,17 @@ class Currencies: ObservableObject {
     //Default Initializer
     //Creating an empty array of currency and configuring the NumberFormatter
     init(){
-        all = [Currency]()
+        
+        if let array = try? JSONDecoder().decode([Currency].self, from: Bundle.getDataFromFile(name: "CurrenciesArray")!) {
+            for currency in array {
+                currency.ConfigureNumberFormatter()
+            }
+            all = array
+        }
+        else {
+            all = [Currency]()
+        }
+        
     }
     
     //Calculates all the conversions from the chosen currency. Executes everytime one of the chosen currency's inputValue changes.
@@ -85,16 +95,14 @@ class Currencies: ObservableObject {
         selectedCurrency.inputValue = 0.0
         print(selectedCurrency.code + " was selected")
     }
-    
-
 }
 
-class Currency: Identifiable, ObservableObject, Equatable {
+class Currency: Identifiable, ObservableObject, Equatable, Codable {
     
     
     @Published var inputValue: Double?
     @Published var calculatedValue: Double? = 0.0
-    @Published var enabled = false
+    @Published var enabled: Bool = false
     
     var code: String
     var name: String
@@ -108,7 +116,16 @@ class Currency: Identifiable, ObservableObject, Equatable {
     var numberFormatter = NumberFormatter()
     
     
-    
+    enum CodingKeys: CodingKey {
+        case inputValue
+        case enabled
+        
+        case code
+        case name
+        case symbol
+        case maxDecimal
+        case countries
+    }
     
     init(code: String, name: String, symbol: String, maxDecimal: Int){
         self.code = code
@@ -116,6 +133,30 @@ class Currency: Identifiable, ObservableObject, Equatable {
         self.symbol = symbol
         self.maxDecimal = maxDecimal
         ConfigureNumberFormatter()
+    }
+    
+    required init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        inputValue = try container.decode(Double?.self, forKey: .inputValue)
+        enabled = try container.decode(Bool.self, forKey: .enabled)
+        
+        code = try container.decode(String.self, forKey: .code)
+        name = try container.decode(String.self, forKey: .name)
+        symbol = try container.decode(String.self, forKey: .symbol)
+        maxDecimal = try container.decode(Int.self, forKey: .maxDecimal)
+        countries = try container.decode([Country].self, forKey: .countries)
+    }
+    
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(inputValue, forKey: .inputValue)
+        try container.encode(enabled, forKey: .enabled)
+        
+        try container.encode(code, forKey: .code)
+        try container.encode(name, forKey: .name)
+        try container.encode(symbol, forKey: .symbol)
+        try container.encode(maxDecimal, forKey: .maxDecimal)
+        try container.encode(countries, forKey: .countries)
     }
     
     var id: String {

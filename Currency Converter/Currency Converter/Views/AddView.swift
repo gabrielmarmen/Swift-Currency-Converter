@@ -114,7 +114,6 @@ struct AddView: View {
                 .animation(.easeInOut, value: searchResults)
         }
         .onChange(of: currencies.chosen) { _ in
-            
             currencies.CalculateConversions()
         }
         

@@ -25,7 +25,7 @@ struct MainView: View {
                 }
                 .preferredColorScheme(.dark)
         }
-        .onAppear(perform: JsonCreator.run)
+    
         
     }
     
