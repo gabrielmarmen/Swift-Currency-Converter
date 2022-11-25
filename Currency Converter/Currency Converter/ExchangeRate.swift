@@ -1,59 +1,60 @@
-// This file was generated from JSON Schema using quicktype, do not modify it directly.
-// To parse the JSON, add this file to your project and do:
 //
-//   let exchangeRateToUSD = try? newJSONDecoder().decode(ExchangeRateToUSD.self, from: jsonData)
+//  ExchangeRate.swift
+//  Currency Converter
+//
+//  Created by Gabriel Marmen on 2022-11-25.
+//
 
 import Foundation
 
-// MARK: - ExchangeRateToUSD
-class ExchangeRate: Codable {
-    let result: String
-    let documentation, termsOfUse: String
-    let timeLastUpdateUnix: Int
-    let timeLastUpdateUTC: String
-    let timeNextUpdateUnix: Int
-    let timeNextUpdateUTC, baseCode: String
-    let conversionRates: [String: Double]
-
+class ExchangeRate: Codable, Identifiable {
     
-    //Exemple Exchange Rate for test purposes. Decoded from a local Json called SampleExchangeRateToUSD.json
+    var id: UUID?
+    var timestamp: Double
+    var conversionRates: [String: Double]
+    
+    enum CodingKeys: String, CodingKey {
+        case id
+        case timestamp 
+        case conversionRates = "rates"
+    }
+    
+    init() {
+        if let cachedExchangeRate = ExchangeRate.getCachedExchangeRate() {
+            self.conversionRates = cachedExchangeRate.conversionRates
+            self.timestamp = cachedExchangeRate.timestamp
+        }else{
+            let exExchangeRate = ExchangeRate.exempleExchangeRate
+            self.conversionRates = exExchangeRate.conversionRates
+            self.timestamp = exExchangeRate.timestamp
+        }
+    }
+    
     static var exempleExchangeRate: ExchangeRate {
         let url = Bundle.main.path(forResource: "SampleExchangeRateToUSD", ofType: "json")
         let data = try? String(contentsOfFile: url!).data(using: .utf8)
-        let exchangeRates = try? JSONDecoder().decode(ExchangeRate.self, from: data!)
+        let exchangeRates = try? JSONDecoder().decode([ExchangeRate].self, from: data!)
         
-        if let exchangeRates {
-            print("Loaded exemple exchange rates with " + (exchangeRates.baseCode) + " as the base code")
+        if exchangeRates != nil {
+            print("Loaded exemple exchange rates.")
         }
         else {
             print("There was an error loading the exemple exchange rates")
         }
         
-        return exchangeRates!
+        return exchangeRates!.first!
     }
     
-    enum CodingKeys: String, CodingKey {
-        case result, documentation
-        case termsOfUse = "terms_of_use"
-        case timeLastUpdateUnix = "time_last_update_unix"
-        case timeLastUpdateUTC = "time_last_update_utc"
-        case timeNextUpdateUnix = "time_next_update_unix"
-        case timeNextUpdateUTC = "time_next_update_utc"
-        case baseCode = "base_code"
-        case conversionRates = "conversion_rates"
+    //Loads the cached ExchangeRate. If it doesnt exist, it returns an exemple Exchange Rate
+    static func getCachedExchangeRate() -> ExchangeRate? {
+        if let data = UserDefaults.standard.data(forKey: "cachedExchangeRate") {
+            return try? JSONDecoder().decode([ExchangeRate].self, from: data).first
+        }
+        return nil
     }
-
-    init(result: String, documentation: String, termsOfUse: String, timeLastUpdateUnix: Int, timeLastUpdateUTC: String, timeNextUpdateUnix: Int, timeNextUpdateUTC: String, baseCode: String, conversionRates: [String: Double]) {
-        self.result = result
-        self.documentation = documentation
-        self.termsOfUse = termsOfUse
-        self.timeLastUpdateUnix = timeLastUpdateUnix
-        self.timeLastUpdateUTC = timeLastUpdateUTC
-        self.timeNextUpdateUnix = timeNextUpdateUnix
-        self.timeNextUpdateUTC = timeNextUpdateUTC
-        self.baseCode = baseCode
-        self.conversionRates = conversionRates
+    //Gets the latest exchange rate from the API
+    static func getLatestExchangeRate() -> ExchangeRate {
+        //Temporary return
+        return ExchangeRate.exempleExchangeRate
     }
-    
-    
 }

@@ -87,7 +87,7 @@ struct AddView: View {
                                 Text(currency.name)
                                     .font(currency.enabled ? .headline : .body)
                                     .foregroundColor(currency.enabled ? .primary : .secondary)
-                                    .animation(.linear.speed(5), value: currency.enabled)
+                                    .animation(.none)
                                 Spacer()
                                 Image(systemName: currency.enabled ? "checkmark.circle.fill" : "circle")
                                     .foregroundColor(currency.enabled ? Color(UIColor.systemBlue) : Color.secondary)
@@ -124,9 +124,5 @@ struct AddView_Previews: PreviewProvider {
     static var previews: some View {
         
         AddView(currencies: allCurrencies)
-            .onAppear {
-                allCurrencies.all.append(Currency.exempleCurrencyAfghanistan())
-                allCurrencies.all.append(Currency.exempleCurrencyFrance())
-            }
     }
 }

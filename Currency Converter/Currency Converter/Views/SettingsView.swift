@@ -8,8 +8,18 @@
 import SwiftUI
 
 struct SettingsView: View {
+    
+    @EnvironmentObject var settings: Settings
+    
     var body: some View {
-        Text("This will be the settings View")
+        NavigationView{
+            List{
+                HStack{
+                    Toggle("Dark Mode", isOn: $settings.darkModeOn.animation())
+                }
+            }
+            .navigationTitle("Settings")
+        }
     }
 }
 

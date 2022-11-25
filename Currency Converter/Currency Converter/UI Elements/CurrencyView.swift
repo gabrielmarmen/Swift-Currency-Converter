@@ -22,50 +22,42 @@ struct CurrencyView: View {
     var body: some View {
         
         HStack{
-            HStack{
-                currency.flagImage
-                    .resizable()
-                    .scaledToFill()
-                    .frame(width: 60, height: 45)
-                    .clipShape(RoundedRectangle(cornerRadius: 7))
-                    .overlay(
-                            RoundedRectangle(cornerRadius: 7)
-                                .stroke(.gray.opacity(0.3), lineWidth: 1)
-                        )
-                    
-                // Button("Modify Currency"){
-                //    currency.calculatedValue = Double.random(in: 0.0...10)
-                // }
-                VStack(alignment: .leading){
-                    Text(currency.code)
-                        .font(.headline)
-                        .foregroundColor(.primary)
-                        .frame(maxWidth: 100, maxHeight: 5, alignment: .leading)
-                        .padding(.bottom, 7)
-                        
-                    Text(currency.name)
-                        .font(.subheadline)
-                        .foregroundColor(.secondary)
-                        .frame(maxWidth: 500, maxHeight: 5, alignment: .leading)
-                       
-                }
-            }
-            VStack{
-                Text(String(currency.formatedValue))
-                    .foregroundColor(.primary)
+            currency.flagImage
+                .resizable()
+                .scaledToFill()
+                .frame(width: 60, height: 45)
+                .clipShape(RoundedRectangle(cornerRadius: 7))
+                .overlay(
+                    RoundedRectangle(cornerRadius: 7)
+                        .stroke(.gray.opacity(0.3), lineWidth: 1)
+                )
+            
+            VStack(alignment: .leading){
+                Text(currency.code)
                     .font(.headline)
-                    .padding(.all, 5)
-            }
-            .background(
-                Rectangle()
-                    .background(Material.thinMaterial.opacity(0.7))
-                    .clipShape(RoundedRectangle(cornerRadius: 7))
-            )
-            .frame( maxHeight: 30, alignment: .trailing)
-            .onTapGesture {
-                isShowingNumberPad = true
+                    .foregroundColor(.primary)
+                    .frame(maxHeight: 5, alignment: .leading)
+                    .padding(.bottom, 7)
+                
+                Text(currency.name)
+                    .font(.subheadline)
+                    .foregroundColor(.secondary)
+                    .frame(maxHeight: 5, alignment: .leading)
+                
             }
             
+            .frame(minWidth: 5)
+            Text(String(currency.formatedValue))
+                .foregroundColor(.primary)
+                .font(.headline)
+                .padding(.all, 5)
+                .background(
+                    Rectangle()
+                        .background(Material.thinMaterial.opacity(0.7))
+                        .clipShape(RoundedRectangle(cornerRadius: 7))
+                )
+                .frame( maxWidth: .infinity, maxHeight: 5, alignment: .trailing)
+                
         }
         .padding()
         .frame(maxWidth: .infinity, minHeight: 75)
@@ -86,12 +78,15 @@ struct CurrencyView: View {
             NumpadView(currency: currency, currencies: currencies)
                 .presentationDetents([.height(225)])
         }
+        .contentShape(Rectangle())
+        .onTapGesture {
+            isShowingNumberPad = true
+        }
     }
 }
 
 struct CurrencyView_Previews: PreviewProvider {
     static var previews: some View {
-        
         NavigationView{
             CurrencyView(currency: Currency.exempleCurrencyFrance(), currencies: Currencies())
         }

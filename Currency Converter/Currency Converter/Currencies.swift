@@ -15,7 +15,7 @@ class Currencies: ObservableObject {
     //Array with all available currencies
     @Published var all: [Currency]
     //Conversion rates for the conversions. For now it is using a sample file for testing purposes. Later its going to be downloading the json from the web.
-    var conversionRates = ExchangeRate.exempleExchangeRate.conversionRates
+    @Published var currentExchangeRate = ExchangeRate()
 
     //Chosen currencies that appear in the main View
     var chosen: [Currency] {
@@ -47,17 +47,16 @@ class Currencies: ObservableObject {
     //Default Initializer
     //Creating an empty array of currency and configuring the NumberFormatter
     init(){
-        
-        if let array = try? JSONDecoder().decode([Currency].self, from: Bundle.getDataFromFile(name: "CurrenciesArray")!) {
-            for currency in array {
-                currency.ConfigureNumberFormatter()
-            }
-            all = array
+        //Force decode currencies from the JSON in app Bundle.
+        let array = try! JSONDecoder().decode([Currency].self, from: Bundle.getDataFromFile(name: "CurrenciesArray")!)
+        //Configures the number formatter for each and every currencies.
+        for currency in array {
+            currency.ConfigureNumberFormatter()
         }
-        else {
-            all = [Currency]()
-        }
+        //Sets the array for usage in app
+        all = array
         
+        //
     }
     
     //Calculates all the conversions from the chosen currency. Executes everytime one of the chosen currency's inputValue changes.
@@ -67,8 +66,8 @@ class Currencies: ObservableObject {
                 currency.calculatedValue = currency.inputValue!
                 
             }else {
-                if let selectedCurrencyConversionRate = conversionRates[selectedCurrency.code]{
-                    if let conversionRate = conversionRates[currency.code]{
+                if let selectedCurrencyConversionRate = currentExchangeRate.conversionRates[selectedCurrency.code]{
+                    if let conversionRate = currentExchangeRate.conversionRates[currency.code]{
                         if let inputValue = selectedCurrency.inputValue{
                             currency.calculatedValue = inputValue / selectedCurrencyConversionRate * conversionRate
                         }
@@ -225,6 +224,7 @@ class Currency: Identifiable, ObservableObject, Equatable, Codable {
     static func exempleCurrencyFrance() -> Currency {
         let exempleCurrency = Currency(code: "EUR", name: "Euro", symbol: "€", maxDecimal: 2)
         let exempleCountry = Country(name: "France", code: "FR")
+        exempleCurrency.calculatedValue = 999_999_999_999.00
         exempleCurrency.enabled = true
         
         exempleCurrency.countries.append(exempleCountry)

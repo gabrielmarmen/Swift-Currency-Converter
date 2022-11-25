@@ -10,6 +10,7 @@ import SwiftUI
 struct MainView: View {
     
     
+    @StateObject var settings = Settings()
     
     
     var body: some View {
@@ -18,18 +19,16 @@ struct MainView: View {
                 .tabItem{
                     Label("Currencies", systemImage: "dollarsign.circle" )
                 }
-                .preferredColorScheme(.dark)
+                .preferredColorScheme(settings.darkModeOn ? .dark : .light)
+                .environmentObject(settings)
             SettingsView()
                 .tabItem{
                     Label("Settings", systemImage: "gearshape.circle" )
                 }
-                .preferredColorScheme(.dark)
+                .preferredColorScheme(settings.darkModeOn ? .dark : .light)
+                .environmentObject(settings)
         }
-    
-        
     }
-    
-    
 }
 
 struct MainView_Previews: PreviewProvider {
