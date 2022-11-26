@@ -23,7 +23,7 @@ class ExchangeRate: Codable, Identifiable {
         if let cachedExchangeRate = ExchangeRate.getCachedExchangeRate() {
             self.conversionRates = cachedExchangeRate.conversionRates
             self.timestamp = cachedExchangeRate.timestamp
-        }else{
+        } else {
             let exExchangeRate = ExchangeRate.exempleExchangeRate
             self.conversionRates = exExchangeRate.conversionRates
             self.timestamp = exExchangeRate.timestamp
@@ -45,16 +45,39 @@ class ExchangeRate: Codable, Identifiable {
         return exchangeRates!.first!
     }
     
+    func saveToUserDefault() {
+        guard let encodedExchangeRate = try? JSONEncoder().encode(self) else {
+            print("Failed to encode Exchange Rate")
+            return
+        }
+        UserDefaults.standard.set(encodedExchangeRate, forKey: "cachedExchangeRate")
+    }
+    
     //Loads the cached ExchangeRate. If it doesnt exist, it returns an exemple Exchange Rate
     static func getCachedExchangeRate() -> ExchangeRate? {
         if let data = UserDefaults.standard.data(forKey: "cachedExchangeRate") {
-            return try? JSONDecoder().decode([ExchangeRate].self, from: data).first
+            if let decodedData = try? JSONDecoder().decode(ExchangeRate.self, from: data) {
+                print("Loaded cached exchange rates.")
+                return decodedData
+            }
         }
         return nil
     }
     //Gets the latest exchange rate from the API
-    static func getLatestExchangeRate() -> ExchangeRate {
-        //Temporary return
-        return ExchangeRate.exempleExchangeRate
+    static func getLatestExchangeRate() async -> ExchangeRate? {
+        do {
+            let (data,_) = try await URLSession.shared.data(from: API.latestURL)
+            if let decodedData = try? JSONDecoder().decode([ExchangeRate].self, from: data).first {
+                print("Got latest Exchange Rates from API.")
+                return decodedData
+            }
+            else{
+                print("An error occured while decoding data.")
+            }
+        }
+        catch {
+            print("An error occured while pulling latest exchange rates")
+        }
+        return nil
     }
 }

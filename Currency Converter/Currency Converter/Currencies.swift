@@ -28,7 +28,6 @@ class Currencies: ObservableObject {
         return tempArray
     }
     
-    
     //This returns the currently selected currency (One being modified)
     //Loop through the currencies to see which one has a non nil input.
     //Every currencies is supposed to have a nil value except the one that is currenctly selected to be converted
@@ -40,9 +39,6 @@ class Currencies: ObservableObject {
         }
         return Currency.exempleCurrencyFrance()
     }
-    
-
-
     
     //Default Initializer
     //Creating an empty array of currency and configuring the NumberFormatter
@@ -83,6 +79,12 @@ class Currencies: ObservableObject {
             }
         }
         print("Calculated Conversions")
+    }
+    
+    func updateExchangeRate(with updatedExchangeRate: ExchangeRate) {
+        self.currentExchangeRate = updatedExchangeRate
+        self.currentExchangeRate.saveToUserDefault()
+        self.CalculateConversions()
     }
     
     //This function resets the input values to nil and set the newly selected Currency's input value to the same as the calculated one

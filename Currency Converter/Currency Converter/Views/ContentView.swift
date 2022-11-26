@@ -22,6 +22,9 @@ struct ContentView: View {
                         .padding(.bottom, 1)
                 }
             }
+            .refreshable {
+                await refreshExchangeRates()
+            }
             .toolbar{
                 Button("Edit"){
                     addViewIsPresented = true
@@ -30,8 +33,19 @@ struct ContentView: View {
             .navigationTitle("Currencies")
             
         }
+        .task {
+            await refreshExchangeRates()
+        }
         .sheet(isPresented: $addViewIsPresented){
             AddView(currencies: currencies)
+        }
+    }
+    
+    func refreshExchangeRates() async {
+        if let updatedExchangeRate = await ExchangeRate.getLatestExchangeRate() {
+            currencies.updateExchangeRate(with: updatedExchangeRate)
+        } else {
+            //put code to show error message and make haptic feed back
         }
     }
 }
