@@ -51,6 +51,7 @@ class ExchangeRate: Codable, Identifiable {
             return
         }
         UserDefaults.standard.set(encodedExchangeRate, forKey: "cachedExchangeRate")
+        print("Saved exchangeRates to UserDefaults")
     }
     
     //Loads the cached ExchangeRate. If it doesnt exist, it returns an exemple Exchange Rate
@@ -66,13 +67,15 @@ class ExchangeRate: Codable, Identifiable {
     //Gets the latest exchange rate from the API
     static func getLatestExchangeRate() async -> ExchangeRate? {
         do {
-            let (data,_) = try await URLSession.shared.data(from: API.latestURL)
+            let session = URLSession.shared
+            session.configuration.timeoutIntervalForResource = 10
+            let (data,_) = try await session.data(from: API.latestURL)
             if let decodedData = try? JSONDecoder().decode([ExchangeRate].self, from: data).first {
                 print("Got latest Exchange Rates from API.")
                 return decodedData
             }
             else{
-                print("An error occured while decoding data.")
+                print("An error occured while pulling latest exchange rates")
             }
         }
         catch {

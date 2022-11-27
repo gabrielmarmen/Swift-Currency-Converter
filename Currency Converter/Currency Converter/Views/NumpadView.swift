@@ -34,7 +34,7 @@ struct NumpadView: View {
                         textField.becomeFirstResponder()
                     }
                     .onChange(of: textFieldValue) { _ in
-                        currency.inputValue = textFieldValue
+                        currency.setInputValue(with: textFieldValue, currencies: currencies)
                         currencies.CalculateConversions()
                     }
                     .onChange(of: textFieldIsFocused) { _ in

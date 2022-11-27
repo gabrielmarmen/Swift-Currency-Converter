@@ -65,8 +65,7 @@ struct AddView: View {
                                     .onTapGesture {
                                         withAnimation{
                                             currencies.objectWillChange.send()
-                                            currency.enabled.toggle()
-                                            
+                                            currency.toggleEnabled(currencies: currencies)
                                         }
                                     }
                                 }
@@ -97,7 +96,7 @@ struct AddView: View {
                             .onTapGesture {
                                 withAnimation{
                                     currencies.objectWillChange.send()
-                                    currency.enabled.toggle()
+                                    currency.toggleEnabled(currencies: currencies)
                                 }
                             }
                             

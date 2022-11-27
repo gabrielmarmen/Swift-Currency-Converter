@@ -7,7 +7,6 @@
 
 import Foundation
 import SwiftUI
-import FlagKit
 
 
 class Currencies: ObservableObject {
@@ -41,10 +40,19 @@ class Currencies: ObservableObject {
     }
     
     //Default Initializer
-    //Creating an empty array of currency and configuring the NumberFormatter
+    //Getting cachedCurrencyArray or pulling it from the Bundle depending if it already exists
+    //Configuring the NumberFormatter for every currencies
     init(){
-        //Force decode currencies from the JSON in app Bundle.
-        let array = try! JSONDecoder().decode([Currency].self, from: Bundle.getDataFromFile(name: "CurrenciesArray")!)
+        
+        var array = [Currency]()
+        //Verifies if there is a cached cachedCurrencyArray, if it doesnt exist it gets the Bundle clean version.
+        if let tempArray = Currency.getCachedCurrencies() {
+            array = tempArray
+        } else {
+            array = try! JSONDecoder().decode([Currency].self, from: Bundle.getDataFromFile(name: "CurrenciesArray")!)
+        }
+        
+        
         //Configures the number formatter for each and every currencies.
         for currency in array {
             currency.ConfigureNumberFormatter()
@@ -91,19 +99,29 @@ class Currencies: ObservableObject {
     //It is called in the CurrencyView when a currency is tapped.
     func SetAsSelected(selectedCurrency: Currency) {
         for currency in chosen where currency.inputValue != nil {
-            currency.inputValue = nil
+            currency.setInputValue(with: nil, currencies: self)
         }
-        selectedCurrency.inputValue = 0.0
+        selectedCurrency.setInputValue(with: 0.0, currencies: self)
         print(selectedCurrency.code + " was selected")
     }
+    
+    func saveCurrencyArrayToUserDefault() {
+        guard let encodedExchangeRate = try? JSONEncoder().encode(self.all) else {
+            print("Failed to encode Exchange Rate")
+            return
+        }
+        UserDefaults.standard.set(encodedExchangeRate, forKey: "cachedCurrencyArray")
+    }
+    
+    
 }
 
 class Currency: Identifiable, ObservableObject, Equatable, Codable {
     
     
-    @Published var inputValue: Double?
+    @Published private(set) var inputValue: Double?
+    @Published private(set) var enabled: Bool = false
     @Published var calculatedValue: Double? = 0.0
-    @Published var enabled: Bool = false
     
     var code: String
     var name: String
@@ -194,6 +212,12 @@ class Currency: Identifiable, ObservableObject, Equatable, Codable {
         return Image(systemName: "x.square.fill")
     }
     
+    //Equatable conformance
+    static func == (lhs: Currency, rhs: Currency) -> Bool {
+        if lhs.code == rhs.code {return true}
+        else {return false}
+    }
+    
     //This function configures the number formatter so it is set up correctly for the type of currency (ex: EUR)
     func ConfigureNumberFormatter() {
         numberFormatter.numberStyle = .currency
@@ -205,10 +229,25 @@ class Currency: Identifiable, ObservableObject, Equatable, Codable {
         self.enabled = false
     }
     
-    static func == (lhs: Currency, rhs: Currency) -> Bool {
-        if lhs.code == rhs.code {return true}
-        else {return false}
+    func toggleEnabled(currencies: Currencies)  {
+        self.enabled.toggle()
+        currencies.saveCurrencyArrayToUserDefault()
     }
+    
+    func setInputValue(with value: Double?, currencies: Currencies) {
+        self.inputValue = value
+        currencies.saveCurrencyArrayToUserDefault()
+    }
+
+    static func getCachedCurrencies() -> [Currency]? {
+        if let data = UserDefaults.standard.data(forKey: "cachedCurrencyArray") {
+            return try? JSONDecoder().decode([Currency].self, from: data)
+        } else{
+            return nil
+        }
+    }
+    
+    
     
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     
