@@ -36,7 +36,7 @@ struct ContentView: View {
         .task {
             await refreshExchangeRates()
         }
-        .sheet(isPresented: $addViewIsPresented){
+        .sheet(isPresented: $addViewIsPresented, onDismiss: currencies.saveCurrencyArrayToUserDefault){
             AddView(currencies: currencies)
         }
     }

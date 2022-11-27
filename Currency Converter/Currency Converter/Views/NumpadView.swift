@@ -64,6 +64,7 @@ struct NumpadView: View {
             .navigationTitle("Enter Amount")
             .onAppear(perform: ConfigureView)
             
+            
     }
     
     

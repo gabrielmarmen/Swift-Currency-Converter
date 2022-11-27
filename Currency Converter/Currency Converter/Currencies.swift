@@ -14,7 +14,7 @@ class Currencies: ObservableObject {
     //Array with all available currencies
     @Published var all: [Currency]
     //Conversion rates for the conversions. For now it is using a sample file for testing purposes. Later its going to be downloading the json from the web.
-    @Published var currentExchangeRate = ExchangeRate()
+    @Published var currentExchangeRate: ExchangeRate
 
     //Chosen currencies that appear in the main View
     var chosen: [Currency] {
@@ -40,10 +40,12 @@ class Currencies: ObservableObject {
     }
     
     //Default Initializer
+    //InitialiseExchangeRate
     //Getting cachedCurrencyArray or pulling it from the Bundle depending if it already exists
     //Configuring the NumberFormatter for every currencies
     init(){
         
+        currentExchangeRate = ExchangeRate()
         var array = [Currency]()
         //Verifies if there is a cached cachedCurrencyArray, if it doesnt exist it gets the Bundle clean version.
         if let tempArray = Currency.getCachedCurrencies() {
@@ -60,6 +62,7 @@ class Currencies: ObservableObject {
         //Sets the array for usage in app
         all = array
         
+        CalculateConversions()
         //
     }
     
@@ -92,7 +95,7 @@ class Currencies: ObservableObject {
     func updateExchangeRate(with updatedExchangeRate: ExchangeRate) {
         self.currentExchangeRate = updatedExchangeRate
         self.currentExchangeRate.saveToUserDefault()
-        self.CalculateConversions()
+        CalculateConversions()
     }
     
     //This function resets the input values to nil and set the newly selected Currency's input value to the same as the calculated one
