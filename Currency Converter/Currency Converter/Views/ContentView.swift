@@ -11,6 +11,7 @@ struct ContentView: View {
     
     @StateObject private var currencies = Currencies()
     @State private var addViewIsPresented = false
+    @State private var isReorganising = false
     
     
     var body: some View {
@@ -18,7 +19,7 @@ struct ContentView: View {
             ScrollView{
                 ForEach(currencies.chosen){ currency in
                     CurrencyView(currency: currency, currencies: currencies)
-                        .padding(.horizontal)
+                        .padding(.horizontal, 10)
                         .padding(.bottom, 1)
                 }
             }
@@ -26,22 +27,40 @@ struct ContentView: View {
                 await refreshExchangeRates()
             }
             .toolbar{
-                Button("Edit"){
-                    addViewIsPresented = true
-                    
-                }
-                Button("Add All") {
-                    for currency in currencies.all {
-                        currency.enable(currencies: currencies)
-                            
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button(){
+                        isReorganising.toggle()
+                    }label: {
+                        if isReorganising {
+                            Text("Done")
+                        } else {
+                            Image(systemName: "line.horizontal.3")
+                                .disabled(currencies.chosen.isEmpty)
+                        }
                     }
                 }
-                Button("Delete All") {
-                    for currency in currencies.all {
-                        currency.disable(currencies: currencies)
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button(){
+                        addViewIsPresented = true
+                    }label: {
+                        Image(systemName: "plus")
                     }
-                    currencies.deleteCurrencyArrayUserDefault()
                 }
+                
+
+//         ----------Buttons for debugging-----------
+//                Button("Add All") {
+//                    for currency in currencies.all {
+//                        currency.enable(currencies: currencies)
+//
+//                    }
+//                }
+//                Button("Delete All") {
+//                    for currency in currencies.all {
+//                        currency.disable(currencies: currencies)
+//                    }
+//                    currencies.deleteCurrencyArrayUserDefault()
+//                }
             }
             .navigationTitle("Currencies")
             

@@ -107,7 +107,7 @@ class Currencies: ObservableObject {
         for currency in chosen where currency.inputValue != nil {
             currency.setInputValue(with: nil, currencies: self)
         }
-        selectedCurrency.setInputValue(with: 0.0, currencies: self)
+        selectedCurrency.setInputValue(with: selectedCurrency.calculatedValue, currencies: self)
         print(selectedCurrency.code + " was selected")
     }
     
@@ -122,7 +122,6 @@ class Currencies: ObservableObject {
     func deleteCurrencyArrayUserDefault() {
         UserDefaults.standard.removeObject(forKey: "cachedCurrencyArray")
     }
-    
     
 }
 

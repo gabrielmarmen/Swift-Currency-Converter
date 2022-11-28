@@ -24,7 +24,6 @@ struct NumpadView: View {
                 Text("Enter Amount")
                     .font(.largeTitle.bold())
                 
-                    
                 CurrencyTextField("Amount", value: $textFieldValue, alwaysShowFractions: false, numberOfDecimalPlaces: currency.maxDecimal, currencySymbol: currency.symbol)
                     .font(.largeTitle)
                     .multilineTextAlignment(TextAlignment.center)
@@ -43,8 +42,6 @@ struct NumpadView: View {
                         }
                     }
                     .focused($textFieldIsFocused)
-                
-                
                 
                 Button(){
                     dismiss()
@@ -70,7 +67,6 @@ struct NumpadView: View {
     
     func ConfigureView() {
         currencies.SetAsSelected(selectedCurrency: currency)
-        
     }
 }
 
