@@ -28,6 +28,19 @@ struct ContentView: View {
             .toolbar{
                 Button("Edit"){
                     addViewIsPresented = true
+                    
+                }
+                Button("Add All") {
+                    for currency in currencies.all {
+                        currency.enable(currencies: currencies)
+                            
+                    }
+                }
+                Button("Delete All") {
+                    for currency in currencies.all {
+                        currency.disable(currencies: currencies)
+                    }
+                    currencies.deleteCurrencyArrayUserDefault()
                 }
             }
             .navigationTitle("Currencies")

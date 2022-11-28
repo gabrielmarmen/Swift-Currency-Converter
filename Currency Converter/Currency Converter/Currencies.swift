@@ -14,7 +14,9 @@ class Currencies: ObservableObject {
     //Array with all available currencies
     @Published var all: [Currency]
     //Conversion rates for the conversions. For now it is using a sample file for testing purposes. Later its going to be downloading the json from the web.
-    @Published var currentExchangeRate: ExchangeRate
+    @Published var currentExchangeRate  = ExchangeRate()
+    
+    
 
     //Chosen currencies that appear in the main View
     var chosen: [Currency] {
@@ -44,8 +46,7 @@ class Currencies: ObservableObject {
     //Getting cachedCurrencyArray or pulling it from the Bundle depending if it already exists
     //Configuring the NumberFormatter for every currencies
     init(){
-        
-        currentExchangeRate = ExchangeRate()
+       
         var array = [Currency]()
         //Verifies if there is a cached cachedCurrencyArray, if it doesnt exist it gets the Bundle clean version.
         if let tempArray = Currency.getCachedCurrencies() {
@@ -63,28 +64,30 @@ class Currencies: ObservableObject {
         all = array
         
         CalculateConversions()
-        //
     }
     
     //Calculates all the conversions from the chosen currency. Executes everytime one of the chosen currency's inputValue changes.
     func CalculateConversions() {
         for currency in chosen {
             if currency.inputValue != nil {
-                currency.calculatedValue = currency.inputValue!
-                
-            }else {
+                withAnimation(.easeInOut.speed(3)){
+                    currency.calculatedValue = currency.inputValue!
+                }
+            } else {
                 if let selectedCurrencyConversionRate = currentExchangeRate.conversionRates[selectedCurrency.code]{
                     if let conversionRate = currentExchangeRate.conversionRates[currency.code]{
                         if let inputValue = selectedCurrency.inputValue{
-                            currency.calculatedValue = inputValue / selectedCurrencyConversionRate * conversionRate
+                            withAnimation(.linear.speed(3)){
+                                currency.calculatedValue = inputValue / selectedCurrencyConversionRate * conversionRate
+                            }
                         }
                     }
                     else {
-                        print("Failed to find conversion rate.")
+                        print("Failed to find conversion rate for \(currency.code) in ExchangeRate.")
                         currency.calculatedValue = nil
                     }
                 }else {
-                    print("Failed to find conversion rate.")
+                    print("Failed to find conversion rate for \(selectedCurrency.code) in ExchangeRate.")
                     currency.calculatedValue = nil
                 }
             }
@@ -114,6 +117,10 @@ class Currencies: ObservableObject {
             return
         }
         UserDefaults.standard.set(encodedExchangeRate, forKey: "cachedCurrencyArray")
+    }
+    
+    func deleteCurrencyArrayUserDefault() {
+        UserDefaults.standard.removeObject(forKey: "cachedCurrencyArray")
     }
     
     
@@ -228,16 +235,25 @@ class Currency: Identifiable, ObservableObject, Equatable, Codable {
         numberFormatter.maximumFractionDigits = maxDecimal
     }
     
-    func disable() {
+    func disable(currencies: Currencies) {
+        currencies.objectWillChange.send()
         self.enabled = false
+        currencies.saveCurrencyArrayToUserDefault()
+    }
+    func enable(currencies: Currencies) {
+        currencies.objectWillChange.send()
+        self.enabled = true
+        currencies.saveCurrencyArrayToUserDefault()
     }
     
     func toggleEnabled(currencies: Currencies)  {
+        currencies.objectWillChange.send()
         self.enabled.toggle()
         currencies.saveCurrencyArrayToUserDefault()
     }
     
     func setInputValue(with value: Double?, currencies: Currencies) {
+        currencies.objectWillChange.send()
         self.inputValue = value
         currencies.saveCurrencyArrayToUserDefault()
     }

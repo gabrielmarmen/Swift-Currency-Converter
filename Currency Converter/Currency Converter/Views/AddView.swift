@@ -64,7 +64,6 @@ struct AddView: View {
                                     .contentShape(Rectangle())
                                     .onTapGesture {
                                         withAnimation{
-                                            currencies.objectWillChange.send()
                                             currency.toggleEnabled(currencies: currencies)
                                         }
                                     }
