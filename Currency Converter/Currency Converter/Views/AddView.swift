@@ -53,7 +53,7 @@ struct AddView: View {
                                         currency.flagImage
                                             .resizable()
                                             .scaledToFill()
-                                            .frame(width: 60, height: 40)
+                                            .frame(width: 60, height: 45)
                                             .clipShape(RoundedRectangle(cornerRadius: 7))
                                         Text(currency.name)
                                             .font(.headline)
@@ -79,7 +79,7 @@ struct AddView: View {
                                 currency.flagImage
                                     .resizable()
                                     .scaledToFill()
-                                    .frame(width: 60, height: 40)
+                                    .frame(width: 60, height: 45)
                                     .clipShape(RoundedRectangle(cornerRadius: 7))
                                 
                                 Text(currency.name)
