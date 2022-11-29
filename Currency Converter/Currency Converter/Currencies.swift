@@ -72,6 +72,7 @@ class Currencies: ObservableObject {
             if currency.inputValue != nil {
                 withAnimation(.easeInOut.speed(3)){
                     currency.calculatedValue = currency.inputValue!
+                    
                 }
             } else {
                 if let selectedCurrencyConversionRate = currentExchangeRate.conversionRates[selectedCurrency.code]{
@@ -93,6 +94,17 @@ class Currencies: ObservableObject {
             }
         }
         print("Calculated Conversions")
+    }
+    
+    func updateExchangeRateWithLatest() async {
+        if let updatedExcangeRate = await ExchangeRate.getLatestExchangeRate() {
+            self.currentExchangeRate = updatedExcangeRate
+            self.currentExchangeRate.saveToUserDefault()
+            CalculateConversions()
+        } else {
+            print("Failed to get latest ExchangeRate")
+        }
+        
     }
     
     func updateExchangeRate(with updatedExchangeRate: ExchangeRate) {
@@ -258,6 +270,7 @@ class Currency: Identifiable, ObservableObject, Equatable, Codable {
         if self.enabled {
             if currencies.chosen.count == 1 {
                 currencies.SetAsSelected(selectedCurrency: self)
+                self.inputValue = 0.0
             }
         } else {
             if self.isSelected && currencies.chosen.count >= 1 {

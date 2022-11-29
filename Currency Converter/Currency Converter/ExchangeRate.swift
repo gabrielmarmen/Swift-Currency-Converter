@@ -75,12 +75,12 @@ class ExchangeRate: Codable, Identifiable {
                 return decodedData
             }
             else{
-                print("An error occured while pulling latest exchange rates")
+                return nil
             }
         }
         catch {
-            print("An error occured while pulling latest exchange rates")
+            return nil
         }
-        return nil
+
     }
 }

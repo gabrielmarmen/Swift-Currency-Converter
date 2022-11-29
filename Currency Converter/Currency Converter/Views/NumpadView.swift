@@ -54,7 +54,7 @@ struct NumpadView: View {
                 .padding(.vertical)
                 .frame(maxWidth: .infinity)
                 .contentShape(Rectangle())
-                .background(.blue)
+                .background(Color.accentColor)
                 .clipShape(RoundedRectangle(cornerRadius: 10))
             }
             .padding(.horizontal)
