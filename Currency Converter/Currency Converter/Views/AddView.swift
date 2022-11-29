@@ -120,7 +120,6 @@ struct AddView: View {
 struct AddView_Previews: PreviewProvider {
     static var allCurrencies = Currencies()
     static var previews: some View {
-        
         AddView(currencies: allCurrencies)
     }
 }

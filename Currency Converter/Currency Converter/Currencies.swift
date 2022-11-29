@@ -237,17 +237,34 @@ class Currency: Identifiable, ObservableObject, Equatable, Codable {
     func disable(currencies: Currencies) {
         currencies.objectWillChange.send()
         self.enabled = false
+        if self.isSelected && currencies.chosen.count >= 1 {
+            currencies.SetAsSelected(selectedCurrency: currencies.chosen.first!)
+        }
+        self.inputValue = nil
         currencies.saveCurrencyArrayToUserDefault()
     }
     func enable(currencies: Currencies) {
         currencies.objectWillChange.send()
         self.enabled = true
+        if currencies.chosen.count == 1 {
+            currencies.SetAsSelected(selectedCurrency: self)
+        }
         currencies.saveCurrencyArrayToUserDefault()
     }
     
     func toggleEnabled(currencies: Currencies)  {
         currencies.objectWillChange.send()
         self.enabled.toggle()
+        if self.enabled {
+            if currencies.chosen.count == 1 {
+                currencies.SetAsSelected(selectedCurrency: self)
+            }
+        } else {
+            if self.isSelected && currencies.chosen.count >= 1 {
+                currencies.SetAsSelected(selectedCurrency: currencies.chosen.first!)
+            }
+            self.inputValue = nil
+        }
         currencies.saveCurrencyArrayToUserDefault()
     }
     

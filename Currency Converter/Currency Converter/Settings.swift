@@ -12,6 +12,4 @@ class Settings: ObservableObject{
     @Published var darkModeOn = true
     @Published var bankFeesEnabled = false
     
-    
-    
 }
