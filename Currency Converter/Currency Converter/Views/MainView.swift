@@ -16,19 +16,22 @@ struct MainView: View {
     
     
     var body: some View {
-        TabView{
-            ContentView()
-                .tabItem{
-                    Label("Currencies", systemImage: "dollarsign.circle" )
-                }
-                .preferredColorScheme(settings.darkModeOn ? .dark : .light)
-                .environmentObject(settings)
-            SettingsView()
-                .tabItem{
-                    Label("Settings", systemImage: "gearshape.circle" )
-                }
-                .preferredColorScheme(settings.darkModeOn ? .dark : .light)
-                .environmentObject(settings)
+        ZStack {
+            settings.backgroundColor
+            TabView{
+                ContentView()
+                    .tabItem{
+                        Label("Currencies", systemImage: "dollarsign.circle" )
+                    }
+                    .preferredColorScheme(settings.darkModeOn ? .dark : .light)
+                    .environmentObject(settings)
+                SettingsView()
+                    .tabItem{
+                        Label("Settings", systemImage: "gearshape.circle" )
+                    }
+                    .preferredColorScheme(settings.darkModeOn ? .dark : .light)
+                    .environmentObject(settings)
+            }
         }
     }
 }

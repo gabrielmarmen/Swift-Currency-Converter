@@ -63,17 +63,18 @@ struct CurrencyView: View {
         .frame(maxWidth: .infinity, minHeight: 75)
         .background(
             currency.flagImage
-            .resizable()
-            .scaledToFill()
-            .scaleEffect(1.1)
-            .opacity(0.5)
-            .blur(radius: 15)
+                .resizable()
+                .scaledToFill()
+                .scaleEffect(1.1)
+                .opacity(0.4)
+                .blur(radius: 15)
         )
+        
         .clipShape(RoundedRectangle(cornerRadius: 15))
-        .overlay(
-                RoundedRectangle(cornerRadius: 15)
-                    .strokeBorder(.gray.opacity(currency.isSelected ? 0.75 : 0.30), lineWidth: currency.isSelected ? 2 : 1)
-            )
+//        .overlay(
+//                RoundedRectangle(cornerRadius: 15)
+//                    .strokeBorder(.gray.opacity(currency.isSelected ? 0.75 : 0.30), lineWidth: currency.isSelected ? 2 : 1)
+//            )
         .sheet(isPresented: $isShowingNumberPad) {
             NumpadView(currency: currency, currencies: currencies)
                 .presentationDetents([.height(225)])

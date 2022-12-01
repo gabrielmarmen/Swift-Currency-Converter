@@ -6,10 +6,14 @@
 //
 
 import Foundation
+import SwiftUI
 
 class Settings: ObservableObject{
     
     @Published var darkModeOn = true
     @Published var bankFeesEnabled = false
+    
+    
+    var backgroundColor = Color(hex: 0x141414)
     
 }
