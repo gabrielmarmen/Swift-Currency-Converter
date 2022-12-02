@@ -62,7 +62,6 @@ class Currencies: ObservableObject {
         }
         //Sets the array for usage in app
         all = array
-        
         CalculateConversions()
     }
     
@@ -96,6 +95,8 @@ class Currencies: ObservableObject {
         print("Calculated Conversions")
     }
     
+    
+    
     func updateExchangeRateWithLatest() async {
         if let updatedExcangeRate = await ExchangeRate.getLatestExchangeRate() {
             self.currentExchangeRate = updatedExcangeRate
@@ -118,8 +119,11 @@ class Currencies: ObservableObject {
     func SetAsSelected(selectedCurrency: Currency) {
         for currency in chosen where currency.inputValue != nil {
             currency.setInputValue(with: nil, currencies: self)
+            
         }
         selectedCurrency.setInputValue(with: selectedCurrency.calculatedValue, currencies: self)
+       
+        
         print(selectedCurrency.code + " was selected")
     }
     
@@ -148,6 +152,7 @@ class Currency: Identifiable, ObservableObject, Equatable, Codable {
     var name: String
     var symbol: String
     var maxDecimal: Int
+    
     
     
     var countries = [Country]()
@@ -210,6 +215,29 @@ class Currency: Identifiable, ObservableObject, Equatable, Codable {
         else {
             return false
         }
+    }
+    var scaleAmount: Double {
+        if self.isSelected {
+            return 1.02
+        } else {
+            return 1
+        }
+    
+    }
+    var shadowOpacity: Double {
+        if self.isSelected {
+            return 0.5
+        } else {
+            return 0.25
+        }
+    }
+    var shadowRadius: Double {
+//        if self.isSelected {
+//            return 4
+//        } else {
+//            return 2
+//        }
+        return 4
     }
     
     //Returns the value in the right format taking into account the currency Used
@@ -286,6 +314,7 @@ class Currency: Identifiable, ObservableObject, Equatable, Codable {
         self.inputValue = value
         currencies.saveCurrencyArrayToUserDefault()
     }
+    
 
     static func getCachedCurrencies() -> [Currency]? {
         if let data = UserDefaults.standard.data(forKey: "cachedCurrencyArray") {
@@ -294,6 +323,8 @@ class Currency: Identifiable, ObservableObject, Equatable, Codable {
             return nil
         }
     }
+    
+    
     
     
     

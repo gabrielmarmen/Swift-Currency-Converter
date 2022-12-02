@@ -24,12 +24,6 @@ struct ContentView: View {
                     ScrollView{
                         ForEach(currencies.chosen){ currency in
                             CurrencyView(currency: currency, currencies: currencies)
-                                .background(
-                                    RoundedRectangle(cornerRadius: 15)
-                                        .fill(Color.black)
-                                        .shadow(color: Color.black.opacity(currency.isSelected ? 0.6 : 0.2) ,radius: 3)
-                                    )
-                                .scaleEffect(currency.isSelected ? 1.01 : 1)
                                 .padding(.horizontal, 10)
                                 .padding(.bottom, 2)
                         }

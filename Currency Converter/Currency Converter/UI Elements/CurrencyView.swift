@@ -17,6 +17,7 @@ struct CurrencyView: View {
     @StateObject var currency: Currency
     @StateObject var currencies: Currencies
     @State private var isShowingNumberPad = false
+    
 
     
     var body: some View {
@@ -65,12 +66,22 @@ struct CurrencyView: View {
             currency.flagImage
                 .resizable()
                 .scaledToFill()
+                .opacity(0.40)
                 .scaleEffect(1.1)
-                .opacity(0.4)
                 .blur(radius: 15)
         )
         
         .clipShape(RoundedRectangle(cornerRadius: 15))
+        .background(
+            RoundedRectangle(cornerRadius: 15)
+                .fill(Color.black)
+                .shadow(color: Color.black.opacity(currency.shadowOpacity) ,radius: currency.shadowRadius)
+            )
+        .scaleEffect(currency.scaleAmount)
+        .animation(.spring(), value: currency.scaleAmount)
+        .animation(.spring(), value: currency.shadowRadius)
+        .animation(.easeIn(duration: 0.5), value: currency.shadowOpacity)
+        
 //        .overlay(
 //                RoundedRectangle(cornerRadius: 15)
 //                    .strokeBorder(.gray.opacity(currency.isSelected ? 0.75 : 0.30), lineWidth: currency.isSelected ? 2 : 1)
@@ -83,6 +94,7 @@ struct CurrencyView: View {
         .onTapGesture {
             isShowingNumberPad = true
         }
+        
     }
 }
 
