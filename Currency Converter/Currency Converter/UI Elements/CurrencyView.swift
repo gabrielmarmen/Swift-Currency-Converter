@@ -70,22 +70,17 @@ struct CurrencyView: View {
                 .scaleEffect(1.1)
                 .blur(radius: 15)
         )
-        
         .clipShape(RoundedRectangle(cornerRadius: 15))
         .background(
             RoundedRectangle(cornerRadius: 15)
                 .fill(Color.black)
-                .shadow(color: Color.black.opacity(currency.shadowOpacity) ,radius: currency.shadowRadius)
+                .shadow(color: Color.black.opacity(1) ,radius:4)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 15)
+                        .strokeBorder(.gray.opacity(currency.border), lineWidth: 2)
+                )
+                .animation(.easeInOut(duration: 0.2), value: currency.border)
             )
-        .scaleEffect(currency.scaleAmount)
-        .animation(.spring(), value: currency.scaleAmount)
-        .animation(.spring(), value: currency.shadowRadius)
-        .animation(.easeIn(duration: 0.5), value: currency.shadowOpacity)
-        
-//        .overlay(
-//                RoundedRectangle(cornerRadius: 15)
-//                    .strokeBorder(.gray.opacity(currency.isSelected ? 0.75 : 0.30), lineWidth: currency.isSelected ? 2 : 1)
-//            )
         .sheet(isPresented: $isShowingNumberPad) {
             NumpadView(currency: currency, currencies: currencies)
                 .presentationDetents([.height(225)])

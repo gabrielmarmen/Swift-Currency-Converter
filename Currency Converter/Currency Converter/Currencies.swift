@@ -216,28 +216,13 @@ class Currency: Identifiable, ObservableObject, Equatable, Codable {
             return false
         }
     }
-    var scaleAmount: Double {
+
+    var border: Double {
         if self.isSelected {
-            return 1.02
+            return 0.8
         } else {
-            return 1
+            return 0.0
         }
-    
-    }
-    var shadowOpacity: Double {
-        if self.isSelected {
-            return 0.5
-        } else {
-            return 0.25
-        }
-    }
-    var shadowRadius: Double {
-//        if self.isSelected {
-//            return 4
-//        } else {
-//            return 2
-//        }
-        return 4
     }
     
     //Returns the value in the right format taking into account the currency Used
