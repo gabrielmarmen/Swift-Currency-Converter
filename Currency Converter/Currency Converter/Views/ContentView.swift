@@ -12,15 +12,15 @@ struct ContentView: View {
     @StateObject private var currencies = Currencies()
     @State private var addViewIsPresented = false
     @State private var isReorganising = false
-    @State private var isRefreshing = false
+    @State private var exchangeRateLoadingState: LoadingState = .loading
     @EnvironmentObject var settings: Settings
     
     
     var body: some View {
-        
             NavigationView{
                 ZStack{
                     settings.backgroundColor.ignoresSafeArea(.all)
+                    
                     ScrollView{
                         ForEach(currencies.chosen){ currency in
                             CurrencyView(currency: currency, currencies: currencies)
@@ -51,19 +51,16 @@ struct ContentView: View {
                                 Image(systemName: "plus")
                             }
                         }
-        //         ----------Buttons for debugging-----------
-        //                Button("Add All") {
-        //                    for currency in currencies.all {
-        //                        currency.enable(currencies: currencies)
-        //
-        //                    }
-        //                }
-        //                Button("Delete All") {
-        //                    for currency in currencies.all {
-        //                        currency.disable(currencies: currencies)
-        //                    }
-        //                    currencies.deleteCurrencyArrayUserDefault()
-        //                }
+                        ToolbarItem(placement: .navigationBarTrailing){
+                            Button("Hello"){
+                                
+                                exchangeRateLoadingState = .failedLoading
+                            }
+                        }
+                        ToolbarItem(placement: .bottomBar){
+                            UpdateStatus(currentExchangeRate: $currencies.currentExchangeRate, loadingState: $exchangeRateLoadingState)
+                        }
+                        
                     }
                     .navigationTitle("Currencies")
                 }
@@ -76,13 +73,17 @@ struct ContentView: View {
                 AddView(currencies: currencies)
             }
             
+            
     }
     
-    func refreshExchangeRates() async {
+    func refreshExchangeRates() async  {
+        exchangeRateLoadingState = .loading
         if let updatedExchangeRate = await ExchangeRate.getLatestExchangeRate() {
             currencies.updateExchangeRate(with: updatedExchangeRate)
+            exchangeRateLoadingState = .loaded
         } else {
-            //put code to show error message and make haptic feed back
+            print("Could not get latest exchange rates...")
+            exchangeRateLoadingState = .failedLoading
         }
     }
 }

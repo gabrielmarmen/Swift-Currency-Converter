@@ -13,7 +13,6 @@ class Currencies: ObservableObject {
     
     //Array with all available currencies
     @Published var all: [Currency]
-    //Conversion rates for the conversions. For now it is using a sample file for testing purposes. Later its going to be downloading the json from the web.
     @Published var currentExchangeRate  = ExchangeRate()
     
     

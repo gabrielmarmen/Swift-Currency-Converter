@@ -7,11 +7,16 @@
 
 import Foundation
 
-class ExchangeRate: Codable, Identifiable {
+class ExchangeRate: Codable, Identifiable, ObservableObject {
+    
+    //Indicated the current loading status (Loaded, Failed loading, loading)
+    
     
     var id: UUID?
     var timestamp: Double
     var conversionRates: [String: Double]
+    
+    
     
     enum CodingKeys: String, CodingKey {
         case id
@@ -44,7 +49,6 @@ class ExchangeRate: Codable, Identifiable {
         
         return exchangeRates!.first!
     }
-    
     func saveToUserDefault() {
         guard let encodedExchangeRate = try? JSONEncoder().encode(self) else {
             print("Failed to encode Exchange Rate")
@@ -66,6 +70,7 @@ class ExchangeRate: Codable, Identifiable {
     }
     //Gets the latest exchange rate from the API
     static func getLatestExchangeRate() async -> ExchangeRate? {
+        
         do {
             let session = URLSession.shared
             session.configuration.timeoutIntervalForResource = 10
@@ -79,6 +84,7 @@ class ExchangeRate: Codable, Identifiable {
             }
         }
         catch {
+            print(error)
             return nil
         }
 
