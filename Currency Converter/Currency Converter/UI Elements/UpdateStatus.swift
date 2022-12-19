@@ -20,10 +20,10 @@ struct UpdateStatus: View {
             return "Refreshing"
             
         case .failedLoading:
-            return "An error occured"
+            return ""
             
         case .loaded:
-            return "Got the latest exchange rates"
+            return ""
         }
        
     }
@@ -31,13 +31,13 @@ struct UpdateStatus: View {
         
         switch loadingState {
         case .loading:
-            return "Please wait"
+            return ""
             
         case .failedLoading:
-            return "Check your network and try again"
+            return "An error occured. Please try again later."
             
         case .loaded:
-            return "Refreshed at : \(Date.now.formatted())"
+            return "Last successful refresh : \(Date.now.formatted())"
         }
        
     }
@@ -45,13 +45,13 @@ struct UpdateStatus: View {
         
         switch loadingState {
         case .loading:
-            return ""
+            return "Please wait"
             
         case .failedLoading:
-            return "Last exchange rates : \(Date(timeIntervalSince1970: currentExchangeRate.timestamp).formatted())"
+            return "Last pulled exchange rates : \(Date(timeIntervalSince1970: currentExchangeRate.timestamp).formatted())"
             
         case .loaded:
-            return "Exchange rates : \(Date(timeIntervalSince1970: currentExchangeRate.timestamp).formatted())"
+            return "Latest available rates : \(Date(timeIntervalSince1970: currentExchangeRate.timestamp).formatted())"
         }
        
     }
@@ -85,19 +85,26 @@ struct UpdateStatus: View {
             }
             
             VStack{
+                if title != "" {
+                    Text(title)
+                        .foregroundColor(.gray)
+                        .font(.system(size: 15))
+                }
+                if text != "" {
+                    Text(text)
+                        .foregroundColor(.gray)
+                        .font(.system(size: 10))
+                }
                 
-                Text(title)
-                    .foregroundColor(.gray)
-                    .font(.system(size: 15))
-                Text(text)
-                    .foregroundColor(.gray)
-                    .font(.system(size: 10))
-                
-                Text(text2)
-                    .foregroundColor(.gray)
-                    .font(.system(size: 10))
+                if text2 != "" {
+                    Text(text2)
+                        .foregroundColor(.gray)
+                        .font(.system(size: 10))
+                }
             }
+            
         }
+        
     }
 }
 

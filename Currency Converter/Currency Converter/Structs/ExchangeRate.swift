@@ -7,7 +7,15 @@
 
 import Foundation
 
-class ExchangeRate: Codable, Identifiable, ObservableObject {
+class ExchangeRate: Codable, Identifiable, ObservableObject, Comparable {
+    static func == (lhs: ExchangeRate, rhs: ExchangeRate) -> Bool {
+        lhs.timestamp == rhs.timestamp
+    }
+    
+    static func < (lhs: ExchangeRate, rhs: ExchangeRate) -> Bool {
+        lhs.timestamp < rhs.timestamp
+    }
+    
     
     //Indicated the current loading status (Loaded, Failed loading, loading)
     
@@ -75,9 +83,10 @@ class ExchangeRate: Codable, Identifiable, ObservableObject {
             let session = URLSession.shared
             session.configuration.timeoutIntervalForResource = 10
             let (data,_) = try await session.data(from: API.latestURL)
-            if let decodedData = try? JSONDecoder().decode([ExchangeRate].self, from: data).first {
+            if let decodedData = try? JSONDecoder().decode([ExchangeRate].self, from: data){
+                let sortedArray = decodedData.sorted()
                 print("Got latest Exchange Rates from API.")
-                return decodedData
+                return sortedArray.last
             }
             else{
                 return nil

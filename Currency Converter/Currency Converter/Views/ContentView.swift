@@ -59,6 +59,7 @@ struct ContentView: View {
                         }
                         ToolbarItem(placement: .bottomBar){
                             UpdateStatus(currentExchangeRate: $currencies.currentExchangeRate, loadingState: $exchangeRateLoadingState)
+                                .padding(.bottom, 5)
                         }
                         
                     }
