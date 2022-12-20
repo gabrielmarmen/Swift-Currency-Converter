@@ -13,20 +13,6 @@ struct UpdateStatus: View {
     @Binding var loadingState: LoadingState
 
     
-    private var title: String {
-        
-        switch loadingState {
-        case .loading:
-            return "Refreshing"
-            
-        case .failedLoading:
-            return ""
-            
-        case .loaded:
-            return ""
-        }
-       
-    }
     private var text: String {
         
         switch loadingState {
@@ -51,7 +37,7 @@ struct UpdateStatus: View {
             return "Last pulled exchange rates : \(Date(timeIntervalSince1970: currentExchangeRate.timestamp).formatted())"
             
         case .loaded:
-            return "Latest available rates : \(Date(timeIntervalSince1970: currentExchangeRate.timestamp).formatted())"
+            return "Rates (Delayed up to 5 min.) : \(Date(timeIntervalSince1970: currentExchangeRate.timestamp).formatted())"
         }
        
     }
@@ -69,6 +55,7 @@ struct UpdateStatus: View {
                     .resizable()
                     .scaledToFit()
                     .frame(width: 15)
+                    .frame(width: 20)
                     .foregroundColor(.red)
                     .opacity(0.5)
                     .padding(.horizontal, 1)
@@ -78,6 +65,7 @@ struct UpdateStatus: View {
                     .resizable()
                     .scaledToFit()
                     .frame(width: 15)
+                    .frame(width: 20)
                     .foregroundColor(.green)
                     .opacity(0.5)
                     .padding(.horizontal, 1)
@@ -85,22 +73,17 @@ struct UpdateStatus: View {
             }
             
             VStack{
-                if title != "" {
-                    Text(title)
-                        .foregroundColor(.gray)
-                        .font(.system(size: 15))
-                }
-                if text != "" {
-                    Text(text)
-                        .foregroundColor(.gray)
-                        .font(.system(size: 10))
-                }
                 
-                if text2 != "" {
-                    Text(text2)
-                        .foregroundColor(.gray)
-                        .font(.system(size: 10))
-                }
+                Text("Last successful refresh : \(currentExchangeRate.refreshedAt.formatted())")
+                    .foregroundColor(.gray)
+                    .font(.system(size: 10))
+                
+                
+                
+                Text("Rates (Delayed up to 5 min.) : \(Date(timeIntervalSince1970: currentExchangeRate.timestamp).formatted())")
+                    .foregroundColor(.gray)
+                    .font(.system(size: 10))
+                
             }
             
         }
