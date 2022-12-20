@@ -20,9 +20,9 @@ struct MainView: View {
             settings.backgroundColor
 //            TabView{
                 ContentView()
-                    .tabItem{
-                        Label("Currencies", systemImage: "dollarsign.circle" )
-                    }
+//                    .tabItem{
+//                        Label("Currencies", systemImage: "dollarsign.circle" )
+//                    }
                     .preferredColorScheme(settings.darkModeOn ? .dark : .light)
                     .environmentObject(settings)
 //                SettingsView()

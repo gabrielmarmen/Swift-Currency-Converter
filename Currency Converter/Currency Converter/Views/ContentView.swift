@@ -32,29 +32,12 @@ struct ContentView: View {
                         await refreshExchangeRates()
                     }
                     .toolbar{
-                        ToolbarItem(placement: .navigationBarTrailing) {
-                            Button(){
-                                isReorganising.toggle()
-                            }label: {
-                                if isReorganising {
-                                    Text("Done")
-                                } else {
-                                    Image(systemName: "line.horizontal.3")
-                                        .disabled(currencies.chosen.isEmpty)
-                                }
-                            }
-                        }
+                        
                         ToolbarItem(placement: .navigationBarLeading) {
                             Button(){
                                 addViewIsPresented = true
                             }label: {
-                                Image(systemName: "plus")
-                            }
-                        }
-                        ToolbarItem(placement: .navigationBarTrailing){
-                            Button("Hello"){
-                                
-                                exchangeRateLoadingState = .failedLoading
+                                Text("Edit")
                             }
                         }
                         ToolbarItem(placement: .bottomBar){
@@ -79,6 +62,13 @@ struct ContentView: View {
     
     func refreshExchangeRates() async  {
         exchangeRateLoadingState = .loading
+        //If the exchange rates are not older than 5 minutes, mark as refreshed and loaded then returns. (This is to reduce network calls)
+        if currencies.currentExchangeRate.timestamp > Date.now.timeIntervalSince1970 - 300 {
+            exchangeRateLoadingState = .loaded
+            currencies.currentExchangeRate.refreshedAt = Date.now
+            return
+        }
+        //Code that makes the exchange rates updates.
         if let updatedExchangeRate = await ExchangeRate.getLatestExchangeRate() {
             currencies.updateExchangeRate(with: updatedExchangeRate)
             exchangeRateLoadingState = .loaded

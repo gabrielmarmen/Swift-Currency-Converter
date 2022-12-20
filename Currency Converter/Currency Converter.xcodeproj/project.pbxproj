@@ -25,7 +25,6 @@
 		60AA10D128EDBCD600CB3246 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 60AA10D028EDBCD600CB3246 /* Assets.xcassets */; };
 		60AA10D428EDBCD600CB3246 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 60AA10D328EDBCD600CB3246 /* Preview Assets.xcassets */; };
 		60AA10DB28EDBD5400CB3246 /* Currencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60AA10DA28EDBD5400CB3246 /* Currencies.swift */; };
-		60AA10DE28EDC1DE00CB3246 /* FlagKit in Frameworks */ = {isa = PBXBuildFile; productRef = 60AA10DD28EDC1DE00CB3246 /* FlagKit */; };
 		60AA10E228EDC6B100CB3246 /* Country.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60AA10E128EDC6B100CB3246 /* Country.swift */; };
 		60AA10E428EDC7E800CB3246 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60AA10E328EDC7E800CB3246 /* MainView.swift */; };
 		60AA10E628EDC86C00CB3246 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60AA10E528EDC86C00CB3246 /* SettingsView.swift */; };
@@ -63,7 +62,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				60AA10DE28EDC1DE00CB3246 /* FlagKit in Frameworks */,
 				600183B128FFD97C00C40AE6 /* SwiftUIKit in Frameworks */,
 				600183AE28FEC31100C40AE6 /* Introspect in Frameworks */,
 			);
@@ -173,7 +171,6 @@
 			);
 			name = "Currency Converter";
 			packageProductDependencies = (
-				60AA10DD28EDC1DE00CB3246 /* FlagKit */,
 				600183AD28FEC31100C40AE6 /* Introspect */,
 				600183B028FFD97C00C40AE6 /* SwiftUIKit */,
 			);
@@ -386,11 +383,12 @@
 				DEVELOPMENT_TEAM = 4SAN7KM5F6;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.travel";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -398,9 +396,12 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.GabrielMarmen.Currency-Converter";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -415,11 +416,12 @@
 				DEVELOPMENT_TEAM = 4SAN7KM5F6;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.travel";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -427,9 +429,12 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.GabrielMarmen.Currency-Converter";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
@@ -493,11 +498,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 600183AF28FFD97C00C40AE6 /* XCRemoteSwiftPackageReference "SwiftUIKit" */;
 			productName = SwiftUIKit;
-		};
-		60AA10DD28EDC1DE00CB3246 /* FlagKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 60AA10DC28EDC1DE00CB3246 /* XCRemoteSwiftPackageReference "FlagKit" */;
-			productName = FlagKit;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
