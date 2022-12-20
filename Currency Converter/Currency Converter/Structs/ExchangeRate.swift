@@ -22,6 +22,7 @@ class ExchangeRate: Codable, Identifiable, ObservableObject, Comparable {
     
     var id: UUID?
     var timestamp: Double
+    var refreshedAt = Date.now
     var conversionRates: [String: Double]
     
     
@@ -84,9 +85,10 @@ class ExchangeRate: Codable, Identifiable, ObservableObject, Comparable {
             session.configuration.timeoutIntervalForResource = 10
             let (data,_) = try await session.data(from: API.latestURL)
             if let decodedData = try? JSONDecoder().decode([ExchangeRate].self, from: data){
-                let sortedArray = decodedData.sorted()
+                let latestExchangeRate = decodedData.sorted().last
+                latestExchangeRate?.refreshedAt = Date.now
                 print("Got latest Exchange Rates from API.")
-                return sortedArray.last
+                return latestExchangeRate
             }
             else{
                 return nil

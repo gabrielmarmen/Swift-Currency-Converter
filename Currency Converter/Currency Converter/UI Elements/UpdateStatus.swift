@@ -37,7 +37,7 @@ struct UpdateStatus: View {
             return "An error occured. Please try again later."
             
         case .loaded:
-            return "Last successful refresh : \(Date.now.formatted())"
+            return "Last successful refresh : \(currentExchangeRate.refreshedAt.formatted())"
         }
        
     }
