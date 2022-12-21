@@ -61,6 +61,7 @@ class Currencies: ObservableObject {
         }
         //Sets the array for usage in app
         all = array
+        print(all.count)
         CalculateConversions()
     }
     

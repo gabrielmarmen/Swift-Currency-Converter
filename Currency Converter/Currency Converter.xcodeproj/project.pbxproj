@@ -43,6 +43,7 @@
 		603265772931DF5F00527BA4 /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		6092D8D1294BB5B700CFFC2B /* UpdateStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateStatus.swift; sourceTree = "<group>"; };
 		6092D8D4294CB2E700CFFC2B /* LoadingState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingState.swift; sourceTree = "<group>"; };
+		6092D8D62953A08600CFFC2B /* Currency-Converter-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Currency-Converter-Info.plist"; sourceTree = SOURCE_ROOT; };
 		60A8A4F5291BD3FF004B317E /* CheckboxView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckboxView.swift; sourceTree = "<group>"; };
 		60AA10C928EDBCD500CB3246 /* Currency Converter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Currency Converter.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		60AA10CC28EDBCD500CB3246 /* Currency_ConverterApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Currency_ConverterApp.swift; sourceTree = "<group>"; };
@@ -110,6 +111,7 @@
 		60AA10CB28EDBCD500CB3246 /* Currency Converter */ = {
 			isa = PBXGroup;
 			children = (
+				6092D8D62953A08600CFFC2B /* Currency-Converter-Info.plist */,
 				60AA10CC28EDBCD500CB3246 /* Currency_ConverterApp.swift */,
 				603265772931DF5F00527BA4 /* API.swift */,
 				603265742931DF0700527BA4 /* Extensions */,
@@ -383,10 +385,10 @@
 				DEVELOPMENT_TEAM = 4SAN7KM5F6;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Currency-Converter-Info.plist";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.travel";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -416,10 +418,10 @@
 				DEVELOPMENT_TEAM = 4SAN7KM5F6;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Currency-Converter-Info.plist";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.travel";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
