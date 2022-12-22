@@ -9,6 +9,8 @@ import SwiftUI
 
 struct ContentView: View {
     
+    @Environment(\.scenePhase) var scenePhase
+    
     @StateObject private var currencies = Currencies()
     @State private var addViewIsPresented = false
     @State private var isReorganising = false
@@ -20,33 +22,56 @@ struct ContentView: View {
             NavigationView{
                 ZStack{
                     settings.backgroundColor.ignoresSafeArea(.all)
-                    
-                    ScrollView{
-                        ForEach(currencies.chosen){ currency in
-                            CurrencyView(currency: currency, currencies: currencies)
-                                .padding(.horizontal, 10)
-                                .padding(.bottom, 2)
-                        }
-                    }
-                    .toolbar{
-                        
-                        ToolbarItem(placement: .navigationBarLeading) {
-                            Button(){
-                                addViewIsPresented = true
-                            }label: {
-                                Text("Edit")
+                    if currencies.chosen.count > 0 {
+                        ScrollView{
+                            ForEach(currencies.chosen){ currency in
+                                CurrencyView(currency: currency, currencies: currencies)
+                                    .padding(.horizontal, 10)
+                                    .padding(.bottom, 2)
                             }
                         }
-                        ToolbarItem(placement: .bottomBar){
-                            UpdateStatus(currentExchangeRate: $currencies.currentExchangeRate, loadingState: $exchangeRateLoadingState)
-                                .padding(.bottom, 5)
+                    } else {
+                        VStack{
+                            Text("You don't have any currencies.")
+                                .foregroundColor(.gray)
+                                .font(.system(size: 15))
+                            HStack{
+                                Text("Tap")
+                                    .foregroundColor(.gray)
+                                    .font(.system(size: 15))
+                                Text("Edit")
+                                    .foregroundColor(.green)
+                                    .foregroundColor(.gray)
+                                    .font(.system(size: 15))
+                                    .onTapGesture {
+                                        addViewIsPresented = true
+                                    }
+                                Text("to add your first!")
+                                    .foregroundColor(.gray)
+                                    .font(.system(size: 15))
+                            }
+                            
                         }
-                        
                     }
-                    .navigationTitle("Currencies")
                 }
                 .refreshable {
                     await refreshExchangeRates()
+                }
+                .navigationTitle("Currencies")
+                .toolbar{
+                    
+                    ToolbarItem(placement: .navigationBarLeading) {
+                        Button(){
+                            addViewIsPresented = true
+                        }label: {
+                            Text("Edit")
+                        }
+                    }
+                    ToolbarItem(placement: .bottomBar){
+                        UpdateStatus(currentExchangeRate: $currencies.currentExchangeRate, loadingState: $exchangeRateLoadingState)
+                            .padding(.bottom, 5)
+                    }
+                    
                 }
                 
             }
@@ -56,8 +81,15 @@ struct ContentView: View {
             .sheet(isPresented: $addViewIsPresented, onDismiss: currencies.saveCurrencyArrayToUserDefault){
                 AddView(currencies: currencies)
             }
-            
-            
+            .onChange(of: scenePhase) { newPhase in
+                if newPhase == .active && currencies.currentExchangeRate.timestamp < Date.now.timeIntervalSince1970 - 300 {
+                    Task {
+                        print("App came back into focus and last refresh rate is more than 5 minutes old. Refreshing...")
+                        await refreshExchangeRates()
+                    }
+                }
+                
+            }
     }
     
     func refreshExchangeRates() async  {
