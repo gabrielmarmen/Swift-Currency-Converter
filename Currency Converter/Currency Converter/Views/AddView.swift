@@ -55,8 +55,14 @@ struct AddView: View {
                                             .scaledToFill()
                                             .frame(width: 60, height: 45)
                                             .clipShape(RoundedRectangle(cornerRadius: 7))
-                                        Text(currency.name)
-                                            .font(.headline)
+                                        VStack(alignment: .leading){
+                                            Text(currency.name)
+                                                .font(.headline)
+                                            Text("\(currency.code) - \(currency.symbol)")
+                                                .foregroundColor(currency.enabled ? .primary : .secondary)
+                                                .font(.subheadline)
+                                            
+                                        }
                                         Spacer()
                                         Image(systemName: currency.enabled ? "checkmark.circle.fill" : "circle")
                                             .foregroundColor(currency.enabled ? Color(UIColor.systemBlue) : Color.secondary)
@@ -81,11 +87,16 @@ struct AddView: View {
                                     .scaledToFill()
                                     .frame(width: 60, height: 45)
                                     .clipShape(RoundedRectangle(cornerRadius: 7))
-                                
-                                Text(currency.name)
-                                    .font(currency.enabled ? .headline : .body)
-                                    .foregroundColor(currency.enabled ? .primary : .secondary)
-                                    .animation(.none)
+                                VStack(alignment: .leading){
+                                    Text(currency.name)
+                                        .font(currency.enabled ? .headline : .body)
+                                        .foregroundColor(currency.enabled ? .primary : .secondary)
+                                        .animation(.none)
+                                    
+                                    Text("\(currency.code) - \(currency.symbol)")
+                                        .foregroundColor(currency.enabled ? .primary : .secondary)
+                                        .font(.subheadline)
+                                }
                                 Spacer()
                                 Image(systemName: currency.enabled ? "checkmark.circle.fill" : "circle")
                                     .foregroundColor(currency.enabled ? Color(UIColor.systemBlue) : Color.secondary)

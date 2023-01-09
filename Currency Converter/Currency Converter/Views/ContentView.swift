@@ -13,6 +13,7 @@ struct ContentView: View {
     
     @StateObject private var currencies = Currencies()
     @State private var addViewIsPresented = false
+    @State private var infoViewIsPresented = false
     @State private var isReorganising = false
     @State private var exchangeRateLoadingState: LoadingState = .loading
     @EnvironmentObject var settings: Settings
@@ -67,6 +68,13 @@ struct ContentView: View {
                             Text("Edit")
                         }
                     }
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        Button(){
+                            infoViewIsPresented = true
+                        }label: {
+                            Image(systemName: "info.circle")
+                        }
+                    }
                     ToolbarItem(placement: .bottomBar){
                         UpdateStatus(currentExchangeRate: $currencies.currentExchangeRate, loadingState: $exchangeRateLoadingState)
                             .padding(.bottom, 5)
@@ -80,6 +88,9 @@ struct ContentView: View {
             }
             .sheet(isPresented: $addViewIsPresented, onDismiss: currencies.saveCurrencyArrayToUserDefault){
                 AddView(currencies: currencies)
+            }
+            .sheet(isPresented: $infoViewIsPresented){
+                InfoView()
             }
             .onChange(of: scenePhase) { newPhase in
                 if newPhase == .active && currencies.currentExchangeRate.timestamp < Date.now.timeIntervalSince1970 - 300 {

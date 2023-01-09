@@ -30,6 +30,7 @@
 		60AA10E628EDC86C00CB3246 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60AA10E528EDC86C00CB3246 /* SettingsView.swift */; };
 		60AA10EA28EDCF4500CB3246 /* CurrencyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60AA10E928EDCF4500CB3246 /* CurrencyView.swift */; };
 		60AA110128F026BC00CB3246 /* NumpadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60AA110028F026BC00CB3246 /* NumpadView.swift */; };
+		60CC914C295E351C0069E6FE /* InfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60CC914B295E351C0069E6FE /* InfoView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -45,7 +46,7 @@
 		6092D8D4294CB2E700CFFC2B /* LoadingState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingState.swift; sourceTree = "<group>"; };
 		6092D8D62953A08600CFFC2B /* Currency-Converter-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Currency-Converter-Info.plist"; sourceTree = SOURCE_ROOT; };
 		60A8A4F5291BD3FF004B317E /* CheckboxView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckboxView.swift; sourceTree = "<group>"; };
-		60AA10C928EDBCD500CB3246 /* Currency Converter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Currency Converter.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		60AA10C928EDBCD500CB3246 /* Currency.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Currency.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		60AA10CC28EDBCD500CB3246 /* Currency_ConverterApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Currency_ConverterApp.swift; sourceTree = "<group>"; };
 		60AA10CE28EDBCD500CB3246 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		60AA10D028EDBCD600CB3246 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -56,6 +57,7 @@
 		60AA10E528EDC86C00CB3246 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		60AA10E928EDCF4500CB3246 /* CurrencyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyView.swift; sourceTree = "<group>"; };
 		60AA110028F026BC00CB3246 /* NumpadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumpadView.swift; sourceTree = "<group>"; };
+		60CC914B295E351C0069E6FE /* InfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,7 +105,7 @@
 		60AA10CA28EDBCD500CB3246 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				60AA10C928EDBCD500CB3246 /* Currency Converter.app */,
+				60AA10C928EDBCD500CB3246 /* Currency.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -142,6 +144,7 @@
 				60AA10E528EDC86C00CB3246 /* SettingsView.swift */,
 				60AA110028F026BC00CB3246 /* NumpadView.swift */,
 				60099AD6291B504A00DF2B3F /* AddView.swift */,
+				60CC914B295E351C0069E6FE /* InfoView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -177,7 +180,7 @@
 				600183B028FFD97C00C40AE6 /* SwiftUIKit */,
 			);
 			productName = "Currency Converter";
-			productReference = 60AA10C928EDBCD500CB3246 /* Currency Converter.app */;
+			productReference = 60AA10C928EDBCD500CB3246 /* Currency.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -205,7 +208,6 @@
 			);
 			mainGroup = 60AA10C028EDBCD500CB3246;
 			packageReferences = (
-				60AA10DC28EDC1DE00CB3246 /* XCRemoteSwiftPackageReference "FlagKit" */,
 				600183AC28FEC31100C40AE6 /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */,
 				600183AF28FFD97C00C40AE6 /* XCRemoteSwiftPackageReference "SwiftUIKit" */,
 			);
@@ -253,6 +255,7 @@
 				60AA10E628EDC86C00CB3246 /* SettingsView.swift in Sources */,
 				60A8A4F6291BD3FF004B317E /* CheckboxView.swift in Sources */,
 				60AA10E428EDC7E800CB3246 /* MainView.swift in Sources */,
+				60CC914C295E351C0069E6FE /* InfoView.swift in Sources */,
 				60AA10CD28EDBCD500CB3246 /* Currency_ConverterApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -314,6 +317,7 @@
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = CurrencyMate;
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -367,6 +371,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = CurrencyMate;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
@@ -397,7 +402,7 @@
 				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.GabrielMarmen.Currency-Converter";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = Currency;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
@@ -430,7 +435,7 @@
 				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.GabrielMarmen.Currency-Converter";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = Currency;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
@@ -478,14 +483,6 @@
 			requirement = {
 				branch = master;
 				kind = branch;
-			};
-		};
-		60AA10DC28EDC1DE00CB3246 /* XCRemoteSwiftPackageReference "FlagKit" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/madebybowtie/FlagKit.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 2.0.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */

@@ -11,36 +11,6 @@ struct UpdateStatus: View {
     
     @Binding var currentExchangeRate: ExchangeRate
     @Binding var loadingState: LoadingState
-
-    
-    private var text: String {
-        
-        switch loadingState {
-        case .loading:
-            return ""
-            
-        case .failedLoading:
-            return "An error occured. Please try again later."
-            
-        case .loaded:
-            return "Last successful refresh : \(currentExchangeRate.refreshedAt.formatted())"
-        }
-       
-    }
-    private var text2: String {
-        
-        switch loadingState {
-        case .loading:
-            return "Please wait"
-            
-        case .failedLoading:
-            return "Last pulled exchange rates : \(Date(timeIntervalSince1970: currentExchangeRate.timestamp).formatted())"
-            
-        case .loaded:
-            return "Rates (Delayed up to 5 min.) : \(Date(timeIntervalSince1970: currentExchangeRate.timestamp).formatted())"
-        }
-       
-    }
     
     var body: some View {
         HStack(alignment: .center){
@@ -87,6 +57,7 @@ struct UpdateStatus: View {
             }
             
         }
+        .frame(width: 500)
         
     }
 }
