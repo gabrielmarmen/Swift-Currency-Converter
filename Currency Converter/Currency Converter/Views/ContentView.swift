@@ -51,7 +51,6 @@ struct ContentView: View {
                                     .foregroundColor(.gray)
                                     .font(.system(size: 15))
                             }
-                            
                         }
                     }
                 }
@@ -79,9 +78,7 @@ struct ContentView: View {
                         UpdateStatus(currentExchangeRate: $currencies.currentExchangeRate, loadingState: $exchangeRateLoadingState)
                             .padding(.bottom, 5)
                     }
-                    
                 }
-                
             }
             .task {
                 await refreshExchangeRates()

@@ -29,7 +29,7 @@ struct UpdateStatus: View {
                     .foregroundColor(.red)
                     .opacity(0.5)
                     .padding(.horizontal, 1)
-                    
+                
                 :
                 Image(systemName: "checkmark.circle.fill")
                     .resizable()
@@ -39,18 +39,16 @@ struct UpdateStatus: View {
                     .foregroundColor(.green)
                     .opacity(0.5)
                     .padding(.horizontal, 1)
-                    
+                
             }
             
             VStack{
                 
-                Text("Last successful refresh : \(currentExchangeRate.refreshedAt.formatted())")
+                Text("Last successful refresh : \(formattedDate(date: currentExchangeRate.refreshedAt))")
                     .foregroundColor(.gray)
                     .font(.system(size: 10))
                 
-                
-                
-                Text("Rates (Delayed up to 5 min.) : \(Date(timeIntervalSince1970: currentExchangeRate.timestamp).formatted())")
+                Text("Rates (Delayed up to 5 min.) : \(formattedDate(date:Date(timeIntervalSince1970: currentExchangeRate.timestamp)))")
                     .foregroundColor(.gray)
                     .font(.system(size: 10))
                 
@@ -59,6 +57,17 @@ struct UpdateStatus: View {
         }
         .frame(width: 500)
         
+    }
+    func formattedDate(date: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MMM d, h:mm a"
+        
+        if Calendar.current.isDateInToday(date){
+            formatter.dateFormat = "h:mm a"
+            return "Today at " + formatter.string(from: date)
+        } else {
+            return formatter.string(from: date)
+        }
     }
 }
 

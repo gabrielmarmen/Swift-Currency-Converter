@@ -8,9 +8,8 @@
 import SwiftUI
 
 struct AddView: View {
-    
+    @Environment(\.dismiss) var dismiss
     @ObservedObject var currencies: Currencies
-    
     @State private var searchString: String = ""
     
     
@@ -96,6 +95,7 @@ struct AddView: View {
                                     Text("\(currency.code) - \(currency.symbol)")
                                         .foregroundColor(currency.enabled ? .primary : .secondary)
                                         .font(.subheadline)
+                                        .animation(.none)
                                 }
                                 Spacer()
                                 Image(systemName: currency.enabled ? "checkmark.circle.fill" : "circle")
@@ -121,6 +121,13 @@ struct AddView: View {
                 .navigationTitle("Add Currencies")
                 .navigationBarTitleDisplayMode(.inline)
                 .animation(.easeInOut, value: searchResults)
+                .toolbar{
+                    ToolbarItem{
+                        Button("Done"){
+                            self.dismiss()
+                        }
+                    }
+                }
         }
         .onChange(of: currencies.chosen) { _ in
             currencies.CalculateConversions()
