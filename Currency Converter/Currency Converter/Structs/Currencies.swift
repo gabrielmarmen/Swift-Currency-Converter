@@ -295,6 +295,7 @@ class Currency: Identifiable, ObservableObject, Equatable, Codable {
     }
     
     func setInputValue(with value: Double?, currencies: Currencies) {
+        
         currencies.objectWillChange.send()
         self.inputValue = value
         currencies.saveCurrencyArrayToUserDefault()

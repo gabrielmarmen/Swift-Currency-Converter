@@ -9,7 +9,7 @@ import Foundation
 
 final class API {
     
-    static let baseURL = URL(string: "https://currencyconverter.gabrielmarmen.com")!
+    static let baseURL = URL(string: "https://currencymate.gabrielmarmen.com")!
     
     static var latestURL: URL {
         API.baseURL.appendingPathComponent("/exchange-rates/latest")

@@ -33,6 +33,9 @@ struct NumpadView: View {
                         textField.becomeFirstResponder()
                     }
                     .onChange(of: textFieldValue) { _ in
+                        if currency.isSelected != true {
+                            currencies.SetAsSelected(selectedCurrency: currency)
+                        }
                         currency.setInputValue(with: textFieldValue, currencies: currencies)
                         currencies.CalculateConversions()
                     }
@@ -66,7 +69,7 @@ struct NumpadView: View {
     
     
     func ConfigureView() {
-        currencies.SetAsSelected(selectedCurrency: currency)
+       //1000 currencies.SetAsSelected(selectedCurrency: currency)
     }
 }
 
