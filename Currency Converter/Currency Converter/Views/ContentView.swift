@@ -115,9 +115,11 @@ struct ContentView: View {
         if let updatedExchangeRate = await ExchangeRate.getLatestExchangeRate() {
             currencies.updateExchangeRate(with: updatedExchangeRate)
             exchangeRateLoadingState = .loaded
+            UINotificationFeedbackGenerator().notificationOccurred(.success)
         } else {
             print("Could not get latest exchange rates...")
             exchangeRateLoadingState = .failedLoading
+            UINotificationFeedbackGenerator().notificationOccurred(.error)
         }
     }
 }
