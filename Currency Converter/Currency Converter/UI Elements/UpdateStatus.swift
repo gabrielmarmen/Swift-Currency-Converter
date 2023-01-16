@@ -21,7 +21,7 @@ struct UpdateStatus: View {
             } else {
                 
                 loadingState == .failedLoading ?
-                Image(systemName: "x.circle.fill")
+                Image(systemName: "exclamationmark.circle.fill")
                     .resizable()
                     .scaledToFit()
                     .frame(width: 15)
@@ -60,7 +60,7 @@ struct UpdateStatus: View {
     }
     func formattedDate(date: Date) -> String {
         let formatter = DateFormatter()
-        formatter.dateFormat = "MMM d, h:mm a"
+        formatter.dateFormat = "MMM d'\(date.daySuffix())', h:mm a"
         
         if Calendar.current.isDateInToday(date){
             formatter.dateFormat = "h:mm a"

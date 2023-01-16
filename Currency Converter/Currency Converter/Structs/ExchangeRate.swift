@@ -22,14 +22,15 @@ class ExchangeRate: Codable, Identifiable, ObservableObject, Comparable {
     
     var id: UUID?
     var timestamp: Double
-    var refreshedAt = Date.now
+    var refreshedAt: Date
     var conversionRates: [String: Double]
     
     
     
     enum CodingKeys: String, CodingKey {
         case id
-        case timestamp 
+        case timestamp
+        case refreshedAt
         case conversionRates = "rates"
     }
     
@@ -37,11 +38,21 @@ class ExchangeRate: Codable, Identifiable, ObservableObject, Comparable {
         if let cachedExchangeRate = ExchangeRate.getCachedExchangeRate() {
             self.conversionRates = cachedExchangeRate.conversionRates
             self.timestamp = cachedExchangeRate.timestamp
+            self.refreshedAt = cachedExchangeRate.refreshedAt
         } else {
             let exExchangeRate = ExchangeRate.exempleExchangeRate
             self.conversionRates = exExchangeRate.conversionRates
             self.timestamp = exExchangeRate.timestamp
+            self.refreshedAt = Date(timeIntervalSince1970: exExchangeRate.timestamp)
         }
+    }
+    
+    required init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        id = try container.decode(UUID.self, forKey: .id)
+        timestamp = try container.decode(Double.self, forKey: .timestamp)
+        refreshedAt = try container.decodeIfPresent(Date.self, forKey: .refreshedAt) ?? Date()
+        conversionRates = try container.decode([String: Double].self, forKey: .conversionRates)
     }
     
     static var exempleExchangeRate: ExchangeRate {
