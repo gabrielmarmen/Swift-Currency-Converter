@@ -90,7 +90,7 @@ struct ContentView: View {
                 InfoView()
             }
             .onChange(of: scenePhase) { newPhase in
-                if newPhase == .active && currencies.currentExchangeRate.timestamp < Date.now.timeIntervalSince1970 - 300 {
+                if newPhase == .active && currencies.currentExchangeRate.timestamp < Date.now.timeIntervalSince1970 - 340 {
                     Task {
                         print("App came back into focus and last refresh rate is more than 5 minutes old. Refreshing...")
                         await refreshExchangeRates()
