@@ -46,7 +46,7 @@
 		6092D8D4294CB2E700CFFC2B /* LoadingState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingState.swift; sourceTree = "<group>"; };
 		6092D8D62953A08600CFFC2B /* Currency-Converter-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Currency-Converter-Info.plist"; sourceTree = SOURCE_ROOT; };
 		60A8A4F5291BD3FF004B317E /* CheckboxView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckboxView.swift; sourceTree = "<group>"; };
-		60AA10C928EDBCD500CB3246 /* Currency.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Currency.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		60AA10C928EDBCD500CB3246 /* CurrencyMate.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CurrencyMate.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		60AA10CC28EDBCD500CB3246 /* Currency_ConverterApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Currency_ConverterApp.swift; sourceTree = "<group>"; };
 		60AA10CE28EDBCD500CB3246 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		60AA10D028EDBCD600CB3246 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -105,7 +105,7 @@
 		60AA10CA28EDBCD500CB3246 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				60AA10C928EDBCD500CB3246 /* Currency.app */,
+				60AA10C928EDBCD500CB3246 /* CurrencyMate.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -180,7 +180,7 @@
 				600183B028FFD97C00C40AE6 /* SwiftUIKit */,
 			);
 			productName = "Currency Converter";
-			productReference = 60AA10C928EDBCD500CB3246 /* Currency.app */;
+			productReference = 60AA10C928EDBCD500CB3246 /* CurrencyMate.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -402,7 +402,7 @@
 				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.GabrielMarmen.Currency-Converter";
-				PRODUCT_NAME = Currency;
+				PRODUCT_NAME = CurrencyMate;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
@@ -435,7 +435,7 @@
 				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.GabrielMarmen.Currency-Converter";
-				PRODUCT_NAME = Currency;
+				PRODUCT_NAME = CurrencyMate;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
