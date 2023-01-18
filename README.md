@@ -1,4 +1,4 @@
-CurrencyMate 💰
+#CurrencyMate 💰
 
 CurrencyMate is a powerful and user-friendly currency conversion app that makes it easy for you to convert between 160 different currencies. Whether you're planning a trip abroad 🛫 or simply need to convert currencies for an online purchase 🛍, CurrencyMate has got you covered.
 
