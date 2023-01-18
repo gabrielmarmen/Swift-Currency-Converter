@@ -17,7 +17,7 @@ CurrencyMate is a powerful and user-friendly currency conversion app that makes 
 4. Enter the amount you want to convert. Conversions will be done automatically in all the other currencies.
 
 ## Download 📥
-CurrencyMate is available for download on the https://apps.apple.com/ca/app/currencymate-convert-money/id1663847664.
+CurrencyMate is available for download on the AppStore https://apps.apple.com/ca/app/currencymate-convert-money/id1663847664.
 
 ## Contribute 🤝
 We welcome contributions to CurrencyMate. If you have an idea for a new feature or have found a bug, please open an issue or submit a pull request.
