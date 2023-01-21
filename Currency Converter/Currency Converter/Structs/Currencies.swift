@@ -48,8 +48,18 @@ class Currencies: ObservableObject {
        
         var array = [Currency]()
         //Verifies if there is a cached cachedCurrencyArray, if it doesnt exist it gets the Bundle clean version.
-        if let tempArray = Currency.getCachedCurrencies() {
-            array = tempArray
+        if let cachedCurrencies = Currency.getCachedCurrencies() {
+            
+            //If there are cached currencies, this function will override the symbols with the ones from the JSON.
+            //This is because if symbols are changed in the JSON they need to be updated in the currencies.
+            let jsonCurrencies = try! JSONDecoder().decode([Currency].self, from: Bundle.getDataFromFile(name: "CurrenciesArray")!)
+            for cachedCurrency in cachedCurrencies {
+                cachedCurrency.symbol = jsonCurrencies.first(where: { $0.code == cachedCurrency.code})!.symbol
+            }
+            
+            //Returns the cached currency array with the updated symbols
+            array = cachedCurrencies
+            
         } else {
             array = try! JSONDecoder().decode([Currency].self, from: Bundle.getDataFromFile(name: "CurrenciesArray")!)
         }
@@ -61,7 +71,6 @@ class Currencies: ObservableObject {
         }
         //Sets the array for usage in app
         all = array
-        print(all.count)
         CalculateConversions()
     }
     
@@ -145,7 +154,7 @@ class Currency: Identifiable, ObservableObject, Equatable, Codable {
     
     
     @Published private(set) var inputValue: Double?
-    @Published private(set) var enabled: Bool = false
+    @Published var enabled: Bool = false
     @Published var calculatedValue: Double? = 0.0
     
     var code: String

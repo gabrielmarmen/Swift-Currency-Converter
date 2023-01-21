@@ -13,11 +13,18 @@ struct InfoView: View {
     var body: some View {
         NavigationView{
             List{
+                
                 Section{
                 } header: {
                     Text("About")
                 } footer: {
-                    Text("This app lets you convert 160 currencies using the middle market rate. The rates are updated every 5 minutes. It's completly free of charge, free of ads and opensource. \n\nIf you have any problems or questions, feel free to contact me using the link bellow.")
+                    Text("This app lets you calculate currency conversions for 160 currencies using the middle market rate. The rates are updated every 5 minutes. It's completely free of charge, free of ads and opensource. \n\nIf you have any problems or questions, feel free to contact me using the link bellow.")
+                }
+                Section{
+                } header: {
+                    Text("How to use")
+                } footer: {
+                    Text("1. Tap the 'edit' button and choose the currencies you wish to have.\n\n2. In the home page, tap the currency you want to calculate conversion from.\n\n3. Enter the amount you wish to convert and conversions will be calculated automatically.")
                 }
                 Section{
                     Button("Support/Contact"){
